@@ -1,0 +1,42 @@
+orchestrator:
+  max_retries: 3
+  parallel_workers: 1
+  log_level: INFO
+  log_dir: ./logs
+  
+opencode:
+  model: moonshotai/kimi-k2.5
+  agent: build
+  timeout: 300
+  base_url: null  # null para usar CLI local, o "http://localhost:4096" para servidor
+  
+cdp:
+  host: 127.0.0.1
+  port: 9222
+  controller_path: null  # Ruta a tu cdp_controller.py, null para autodetectar
+  
+validation:
+  performance:
+    lcp: 2500
+    cls: 0.1
+    fcp: 1800
+    ttfb: 800
+  console:
+    fail_on_error: true
+    allowed_warnings:
+      - "React.StrictMode"
+      - "DevTools"
+  visual:
+    enabled: true
+    model: moonshotai/kimi-k2.5
+    timeout: 60
+
+directories:
+  tasks: ./tasks
+  screenshots: ./screenshots
+  reports: ./reports
+  logs: ./logs
+  
+files:
+  status: ./task-status.json
+  context: ./project-context.md

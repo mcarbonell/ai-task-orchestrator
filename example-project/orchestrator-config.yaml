@@ -1,0 +1,39 @@
+orchestrator:
+  max_retries: 2
+  parallel_workers: 1
+  log_level: INFO
+  
+opencode:
+  model: kimi-k2.5-free
+  agent: build
+  timeout: 300
+  
+cdp:
+  host: 127.0.0.1
+  port: 9222
+  controller_path: "C:\\Users\\mrcm_\\Local\\proj\\webrenove\\cdp_controller.py"
+  
+validation:
+  performance:
+    lcp: 2500
+    cls: 0.1
+    fcp: 1800
+    ttfb: 800
+  console:
+    fail_on_error: true
+    allowed_warnings:
+      - "React.StrictMode"
+  visual:
+    enabled: true
+    model: kimi-k2.5-free
+    timeout: 60
+
+directories:
+  tasks: ./tasks
+  screenshots: ./screenshots
+  reports: ./reports
+  logs: ./logs
+  
+files:
+  status: ./task-status.json
+  context: ./project-context.md
