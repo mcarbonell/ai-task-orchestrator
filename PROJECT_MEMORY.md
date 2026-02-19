@@ -29,22 +29,22 @@ ai-task-orchestrator/
 ├── requirements.txt            # Dependencias Python
 ├── task_runner/                # Core del sistema (7 módulos)
 │   ├── __init__.py
-│   ├── task_engine.py         # Orquestador principal (574 líneas)
-│   ├── task_parser.py         # Parser de markdown YAML (244 líneas)
-│   ├── opencode_runner.py     # Wrapper OpenCode CLI (125 líneas)
-│   ├── cdp_wrapper.py         # Wrapper CDP Controller (256 líneas)
-│   ├── visual_validator.py    # Validación visual IA (114 líneas)
-│   ├── report_generator.py    # Generador reportes (191 líneas)
-│   └── utils.py               # Utilidades (63 líneas)
+│   ├── task_engine.py          # Orquestador principal (574 líneas)
+│   ├── task_parser.py          # Parser de markdown YAML (244 líneas)
+│   ├── tool_calling_agent.py   # Agente nativo Tool Calling (V2)
+│   ├── cdp_wrapper.py          # Wrapper CDP Controller (256 líneas)
+│   ├── visual_validator.py     # Validación visual IA (114 líneas)
+│   ├── report_generator.py     # Generador reportes (191 líneas)
+│   └── utils.py                # Utilidades (63 líneas)
 ├── templates/                  # Plantillas para nuevos proyectos
 │   ├── task-template.md
 │   └── project-context-template.md
-├── example-project/           # Ejemplo: e-commerce
+├── example-project/            # Ejemplo: e-commerce
 │   ├── tasks/
 │   │   ├── T-001-setup.md
 │   │   └── T-002-header.md
 │   └── project-context.md
-└── test-real-project/         # Proyecto de prueba real
+└── test-real-project/          # Proyecto de prueba real
 ```
 
 ---

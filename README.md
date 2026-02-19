@@ -200,13 +200,13 @@ validation:
 ┌─────────────────────────────────────────────────────────────┐
 │                    AI TASK ORCHESTRATOR                     │
 ├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  Task Files → Task Parser → Task Engine → ToolCallingAgent   │
-│       (md)        (YAML)      (logic)        (API V2)        │
+│                                                             │
+│  Task Files → Task Parser → Task Engine → ToolCallingAgent  │
+│       (md)        (YAML)      (logic)        (API V2)       │
 │                              /      \                       │
-│                        CDP Tests    Visual Validator       │
-│                       (Chrome)      (Vision API)           │
-│                                                              │
+│                        CDP Tests    Visual Validator        │
+│                       (Chrome)      (Vision API)            │
+│                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 

@@ -29,7 +29,7 @@ validation:
       - "DevTools"
   visual:
     enabled: true
-    model: moonshotai/kimi-k2.5
+    model: kimi-k2.5-free
     timeout: 60
 
 directories:
