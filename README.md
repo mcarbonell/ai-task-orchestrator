@@ -1,29 +1,31 @@
 # AI Task Orchestrator 🤖
 
-> **Automatiza el desarrollo de software con agentes de IA.**
-> 
-> Define tareas en archivos markdown, y deja que la IA las implemente, testee y valide automáticamente.
+> **El Management autónomo para Agentes de IA.**
+>
+> Define tareas en archivos markdown y deja que un equipo de agentes (ToolCalling) las implemente, testee en terminal, valide e incluso verifique la interfaz visualmente. Soporta OpenRouter y la API Zen (OpenCode).
+>
+> **Tags:** `ai-agents` `autonomous-coding` `tool-calling` `llm` `orchestrator` `testing` `browser-automation`
 
-[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
-[![OpenCode](https://img.shields.io/badge/OpenCode-1.1+-green.svg)](https://opencode.ai)
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://python.org)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## 🚀 Demo
 
 ```bash
 # 1. Instalar
-git clone https://github.com/tuusuario/ai-task-orchestrator.git
+git clone https://github.com/mcarbonell/ai-task-orchestrator.git
 cd ai-task-orchestrator
 pip install -r requirements.txt
+cp .env.example .env # (Añade tu OPENROUTER_API_KEY o ZEN_API_KEY aquí)
 
 # 2. Crear proyecto
 python run.py init mi-proyecto
 cd mi-proyecto
 
 # 3. Crear tarea
-python run.py create-task "Implementar login"
+python run.py create-task "Implementar landing page"
 
-# 4. Ejecutar (la IA hace el trabajo!)
+# 4. Ejecutar (la IA entra en Agent Loop!)
 python run.py run
 ```
 
@@ -60,44 +62,37 @@ CDP Tests ←─ Validación ←─┘
 
 ## 📦 Instalación
 
-### ⚠️ IMPORTANTE: Terminal Compatible
+### Prerrequisitos
+- **Python 3.10+** (Recomendado)
+- **Chrome/Chromium** - Para tests E2E con CDP
+- **CDP Controller** - [cdp-controller](https://github.com/mcarbonell/cdp-controller) corriendo en tu máquina (`--remote-debugging-port=9222`)
 
-**OpenCode solo funciona correctamente en:**
-- ✅ **Windows PowerShell** (recomendado)
-- ✅ **Windows CMD** 
-- ❌ **MINGW64/Git Bash** - NO funciona (error: "Session not found")
-
-**Para usar:**
-```powershell
-# PowerShell (como administrador o normal)
-PS> cd ai-task-orchestrator
-PS> python run.py status
+### 1. Clonar y Configurar Dependencias
+```bash
+git clone https://github.com/mcarbonell/ai-task-orchestrator.git
+cd ai-task-orchestrator
+pip install -r requirements.txt
 ```
 
-### Prerrequisitos
+### 2. Variables de Entorno (¡Importante!)
+El orquestador V2 utiliza una arquitectura nativa de Agent **sin depender de CLI frágiles**. Todo funciona por API (OpenRouter o la API OpenCode Zen).
 
-- **Python 3.8+**
-- **OpenCode CLI** - [Instalación](https://opencode.ai/docs/installation)
-- **Chrome/Chromium** - Para tests E2E con CDP
-- **CDP Controller** - [Tu herramienta](https://github.com/tuusuario/cdp-controller)
-
-### Setup
-
+Copia el `env.example`:
 ```bash
-# Clonar repositorio
-git clone https://github.com/tuusuario/ai-task-orchestrator.git
-cd ai-task-orchestrator
+cp .env.example .env
+```
+Edita `.env` y añade tus claves:
+```env
+# Ejemplo para OpenRouter
+OPENROUTER_API_KEY=tu_clave_aqui
 
-# Instalar dependencias
-pip install -r requirements.txt
+# Ejemplo para Zen API
+ZEN_API_KEY=tu_clave_aqui
+```
 
-# Verificar OpenCode
-opencode --version
-
-# Verificar Chrome con CDP
-# Windows:
+### 3. Verificar Chrome con CDP (Windows)
+```bash
 "C:\Program Files\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222
-
 # Verificar conexión
 curl http://127.0.0.1:9222/json/version
 ```
@@ -161,7 +156,7 @@ steps:
 # Ver estado
 python run.py status
 
-# Ejecutar todas las tareas
+# Ejecutar todas las tareas (¡Aquí entra la IA en acción!)
 python run.py run
 
 # Ejecutar tarea específica  
@@ -173,7 +168,7 @@ python run.py report
 
 ## 🔧 Configuración
 
-Crea `orchestrator-config.yaml`:
+Crea/Edita `orchestrator-config.yaml`:
 
 ```yaml
 orchestrator:
@@ -182,8 +177,9 @@ orchestrator:
   log_level: INFO
 
 opencode:
-  model: opencode/kimi-k2.5  # Tu modelo favorito
-  agent: build
+  # Opciones proveedor V2: "zen" o "openrouter"
+  provider: zen
+  model: kimi-k2.5-free
   timeout: 300
 
 cdp:
@@ -198,25 +194,6 @@ validation:
     fcp: 1800
 ```
 
-## ⚠️ Nota Importante sobre OpenCode
-
-**Limitación conocida:** OpenCode CLI requiere una sesión inicializada manualmente antes de poder ejecutarse en modo no-interactivo.
-
-### Solución (una sola vez):
-
-```bash
-# 1. Iniciar OpenCode manualmente
-opencode
-
-# 2. Esperar que cargue completamente
-# 3. Salir con Ctrl+C
-
-# 4. Ahora el orchestrator funcionará automáticamente
-python run.py run
-```
-
-**Alternativa:** Configurar `base_url` para usar un servidor OpenCode persistente.
-
 ## 🏗️ Arquitectura
 
 ```
@@ -224,21 +201,21 @@ python run.py run
 │                    AI TASK ORCHESTRATOR                     │
 ├─────────────────────────────────────────────────────────────┤
 │                                                              │
-│  Task Files → Task Parser → Task Engine → OpenCode Agent   │
-│       (md)        (YAML)      (logic)        (AI)          │
+│  Task Files → Task Parser → Task Engine → ToolCallingAgent   │
+│       (md)        (YAML)      (logic)        (API V2)        │
 │                              /      \                       │
 │                        CDP Tests    Visual Validator       │
-│                       (Chrome)      (Vision AI)            │
+│                       (Chrome)      (Vision API)           │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 **Componentes:**
-- **Task Engine:** Orquesta ejecución, gestiona estado, reintentos
+- **Task Engine:** Orquesta ejecución, gestiona estado, inyecta historial
 - **Task Parser:** Lee archivos markdown, extrae metadatos YAML
-- **OpenCode Runner:** Wrapper para invocar agentes de IA
-- **CDP Wrapper:** Controla Chrome para tests E2E
-- **Visual Validator:** Usa IA para validar screenshots
+- **ToolCallingAgent:** Agente iterativo LLM 100% autónomo (OpenRouter/Zen)
+- **CDP Wrapper:** Controla Chrome para tests E2E y toma de Screenshots
+- **Visual Validator:** Convierte las vistas a Base64 y pasa QA Visual
 - **Report Generator:** Crea reportes JSON/HTML/Markdown
 
 ## 📝 Formato de Tareas
@@ -251,7 +228,7 @@ id: T-001
 title: "Nombre de la tarea"
 status: pending
 priority: high
-dependencies: [T-002]  # Opcional
+dependencies: [T-002]  # Opcional (inyecta historial)
 estimated_time: "2h"
 ---
 
@@ -320,52 +297,31 @@ python run.py reset
 
 ## 🐛 Solución de Problemas
 
-### "Session not found" o "Unauthorized" con OpenCode
+### `ModuleNotFoundError: No module named 'dotenv'`
+**Causa:** No instalaste las dependencias del `requirements.txt`.
+**Solución:** Ejecuta `pip install -r requirements.txt`.
 
-**Causa:** Estás usando MINGW64/Git Bash. OpenCode NO funciona en este terminal.
-
-**Solución:** Usa Windows PowerShell o CMD:
-```powershell
-# PowerShell (recomendado)
-PS C:\> cd ai-task-orchestrator
-PS C:\ai-task-orchestrator> python run.py status
-```
-
-### Chrome no conecta
-
+### Chrome no conecta (Para Screenshots/Tests E2E)
 ```bash
 # Verificar Chrome está en modo debug
 curl http://127.0.0.1:9222/json/version
 
-# Reiniciar Chrome completamente
-```
-
-### Errores de Unicode en Windows
-
-```bash
-# PowerShell
-$env:PYTHONIOENCODING = "utf-8"
-python run.py run
+# Windows CMD de atajo para abrir Chrome
+"C:\Program Files\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222
 ```
 
 ## 🗺️ Roadmap
 
-### v1.0 (Actual) ✅
-- Orquestación de tareas con dependencias
-- Integración OpenCode CLI
-- Tests E2E con CDP
-- Validación visual con IA
-- Reportes JSON/HTML/Markdown
+### v2.0 (Actual) ✅
+- [x] Migración total a arquitectura `ToolCallingAgent` por API nativa
+- [x] Independencia del frágil OpenCode CLI global
+- [x] Validación Visual QA inyectando Base64 multimodal directamente
+- [x] Inyección de historial por Agente basado en `dependencies`
+- [x] Compatibilidad OpenRouter y Zen API (.env variable)
 
-### v1.1 (Próximo)
-- [ ] SDK de OpenCode para ejecución 100% automática
-- [ ] Auto-corrección de errores
-- [ ] Visual regression testing
-- [ ] Watch mode
-
-### v2.0 (Futuro)
-- [ ] Multi-agent (diferentes agentes para diferentes tareas)
-- [ ] Planning automático (IA genera tareas desde requerimientos)
+### v3.0 (Futuro)
+- [ ] Agente Planner: LLM inicial que genera los `tasks/T-xxx.md` automáticamente dado un prompt humano.
+- [ ] Multi-agent (diferentes perfiles de agentes para diferentes tareas)
 - [ ] Integración CI/CD (GitHub Actions, GitLab CI)
 - [ ] Dashboard web de progreso
 
@@ -387,12 +343,12 @@ MIT License - ver [LICENSE](LICENSE)
 
 ## 💬 Comunidad
 
-- [Discusiones](https://github.com/tuusuario/ai-task-orchestrator/discussions)
-- [Issues](https://github.com/tuusuario/ai-task-orchestrator/issues)
+- [Discusiones](https://github.com/mcarbonell/ai-task-orchestrator/discussions)
+- [Issues](https://github.com/mcarbonell/ai-task-orchestrator/issues)
 
 ---
 
-**¿Listo para automatizar tu desarrollo?** 🚀
+**¿Listo para delegar desarrollo real en IA?** 🚀
 
 ### Windows PowerShell (Recomendado)
 ```powershell

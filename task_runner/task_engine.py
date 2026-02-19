@@ -11,7 +11,7 @@ from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from .task_parser import TaskParser, Task
-from .opencode_runner import OpenCodeRunner
+from .tool_calling_agent import ToolCallingAgent
 from .cdp_wrapper import CDPWrapper
 from .visual_validator import VisualValidator
 from .report_generator import ReportGenerator
@@ -42,7 +42,14 @@ class TaskEngine:
         
         # Inicializar componentes
         self.parser = TaskParser(self.tasks_dir)
-        self.opencode = OpenCodeRunner(config.get("opencode", {}))
+        
+        # Nueva V2: ToolCallingAgent puro
+        self.opencode = ToolCallingAgent(
+            model=config.get("opencode", {}).get("model", "kimi-k2.5-free"),
+            provider=config.get("opencode", {}).get("provider", "zen"),
+            max_iterations=config.get("orchestrator", {}).get("max_iterations", 15)
+        )
+        
         self.cdp = CDPWrapper(config.get("cdp", {}))
         self.visual_validator = VisualValidator(config.get("validation", {}).get("visual", {}), config.get("opencode", {}))
         self.report_generator = ReportGenerator(config.get("directories", {}).get("reports", "./reports"))
@@ -256,6 +263,7 @@ class TaskEngine:
                 
                 execution_record["completed_at"] = task.completed_at.isoformat()
                 execution_record["success"] = True
+                execution_record["implementation_summary"] = implementation_result.get("output", "")
                 self.execution_log.append(execution_record)
                 
                 self.logger.info(f"✅ Tarea {task.id} completada exitosamente!")
@@ -282,17 +290,32 @@ class TaskEngine:
         return False
     
     def _run_implementation(self, task: Task, attempt: int) -> Dict:
-        """Ejecuta la implementación con OpenCode"""
-        # Preparar prompt con contexto
-        prompt = self._build_implementation_prompt(task, attempt)
+        """Ejecuta la implementación usando el ToolCallingAgent"""
         
-        # Ejecutar OpenCode
-        result = self.opencode.run(prompt, task_id=task.id)
+        # Preparar prompt con contexto
+        system_prompt = "Eres un agente de software autónomo. Implementa la tarea basándote estrictamente en los requisitos. Usa herramientas como escribir archivos y comandos de terminal. CUANDO TERMINES, llama OBLIGATORIAMENTE a finish_task()."
+        task_prompt = self._build_implementation_prompt(task, attempt)
+        
+        # Recuperar estado de tareas previas si la tarea tiene dependencias
+        context_str = ""
+        if task.dependencies:
+            context_str = "CONTEXTO PREVIO (Basado en tareas terminadas):\n---\n"
+            for log in self.execution_log:
+                if log.get("task_id") in task.dependencies and log.get("success"):
+                    context_str += f"- La tarea precedente ({log.get('task_id')}) reportó este resultado: {log.get('implementation_summary', 'Completado exitosamente')}\n"
+            context_str += "---\n\n"
+            task_prompt = context_str + task_prompt
+        
+        # Ejecutar Agent Loop
+        result = self.opencode.run_task(system_prompt=system_prompt, task_prompt=task_prompt)
+        
+        # Evaluar resultado
+        success = result.get("status") == "completed"
         
         return {
-            "success": result.get("success", False),
-            "output": result.get("output", ""),
-            "error": result.get("error", None)
+            "success": success,
+            "output": result.get("summary", ""),
+            "error": result.get("summary", "") if not success else None
         }
     
     def _build_implementation_prompt(self, task: Task, attempt: int) -> str:
@@ -344,14 +367,36 @@ class TaskEngine:
         if not task.unit_tests:
             return {"success": True, "message": "No hay tests unitarios definidos"}
         
+        import subprocess
+        import os
+        
         results = []
         for test_cmd in task.unit_tests:
-            result = self.opencode.run_bash(test_cmd, task_id=task.id)
-            results.append({
-                "command": test_cmd,
-                "success": result.get("exit_code", 1) == 0,
-                "output": result.get("output", "")
-            })
+            try:
+                # Ejecutamos con subprocess ya que OpenCodeRunner ya no existe
+                self.logger.info(f"    $ {test_cmd}")
+                proc = subprocess.run(
+                    test_cmd, 
+                    shell=True, 
+                    capture_output=True, 
+                    text=True,
+                    cwd=os.getcwd()
+                )
+                
+                success = proc.returncode == 0
+                output = proc.stdout + "\n" + proc.stderr
+                
+                results.append({
+                    "command": test_cmd,
+                    "success": success,
+                    "output": output
+                })
+            except Exception as e:
+                results.append({
+                    "command": test_cmd,
+                    "success": False,
+                    "output": str(e)
+                })
         
         all_passed = all(r["success"] for r in results)
         

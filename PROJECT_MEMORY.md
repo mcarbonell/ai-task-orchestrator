@@ -1,7 +1,7 @@
 # AI Task Orchestrator - Memoria del Proyecto
 
-**Fecha:** 2026-02-17  
-**Estado:** MVP Funcional v1.0  
+**Fecha:** 2026-02-20
+**Estado:** Funcional v2.0  
 **Ubicación:** `C:\Users\mrcm_\Local\proj\ai-task-orchestrator`
 
 ---
@@ -49,13 +49,11 @@ ai-task-orchestrator/
 
 ---
 
-## 🔧 Arquitectura del Sistema
-
 ### Componentes Principales
 
 **1. Task Engine (`task_engine.py`)**
 - Orquesta ejecución de tareas
-- Gestiona dependencias entre tareas
+- Gestiona dependencias entre tareas, inyectando historial para retener contexto
 - Maneja reintentos con backoff
 - Soporta ejecución paralela
 - Estados: pending → in_progress → validating → completed/failed
@@ -67,11 +65,12 @@ ai-task-orchestrator/
 - Extrae tests unitarios (bloques de código)
 - Parsea tests E2E (configuración YAML)
 
-**3. OpenCode Runner (`opencode_runner.py`)**
-- Wrapper para ejecutar `opencode run`
-- Construye prompts enriquecidos
-- Gestiona reintentos
-- NOTA: Requiere sesión inicializada manualmente primero
+**3. ToolCallingAgent (`tool_calling_agent.py`) [V2 REEMPLAZO DE OPENCODE RUNNER]**
+- Agente nativo basado 100% en API (Tool Calling / Function Calling)
+- Soporta proveedores intercambiables (OpenRouter, Zen API de OpenCode, OpenAI)
+- Implementa un loop de agencia ('Agent Loop') que procesa llamadas a funciones
+- Herramientas nativas: bash_command, read_file, write_file, create_subtask, finish_task
+- Elimina la fragilidad y cuelgues del antiguo wrapper CLI
 
 **4. CDP Wrapper (`cdp_wrapper.py`)**
 - Integra cdp_controller.py del usuario
@@ -80,9 +79,10 @@ ai-task-orchestrator/
 - Ejecuta JavaScript
 - Obtiene métricas de performance
 
-**5. Visual Validator (`visual_validator.py`)**
+**5. Visual Validator (`visual_validator.py`) [V2 NATIVO]**
 - Usa IA con visión para validar screenshots
-- Envía imágenes a OpenCode con --file
+- Lee imágenes locales vía Base64 y usa API Multimodal nativa de ToolCallingAgent
+- Formato de validación estructurado
 - Detecta errores de UI/UX
 
 **6. Report Generator (`report_generator.py`)**
@@ -92,29 +92,9 @@ ai-task-orchestrator/
 
 ---
 
-## ⚠️ Limitación Conocida: OpenCode Session
-
-**Problema:** OpenCode CLI requiere una sesión inicializada manualmente antes de poder ejecutar `opencode run`.
-
-**Error:** `Session not found`
-
-**Solución actual (documentada):**
-```bash
-# 1. Iniciar OpenCode manualmente una vez
-opencode
-
-# 2. Esperar que cargue
-# 3. Salir con Ctrl+C
-
-# 4. Ahora el orchestrator funcionará
-python run.py run
-```
-
-**Posibles soluciones a investigar:**
-1. Usar SDK de OpenCode en lugar de CLI
-2. Configurar servidor persistente con `opencode serve`
-3. Usar flag `--continue` (ya implementado pero no funciona sin sesión previa)
-4. Integrar directamente con API de OpenRouter
+## ✅ Resuelto: OpenCode Session Limitación
+En la versión MVP (v1.0), el sistema dependía del CLI de OpenCode de forma frágil por procesos en background lo que traía problemas de Sesión ("Session not found"). 
+**En la V2 (Actual)**, toda la interacción ocurre vía API (Requests puros), decodificando respuestas en JSON. El problema de sesión ya no existe en el Orquestador y es 100% autónomo una vez provista la API_KEY en un archivo `.env`.
 
 ---
 

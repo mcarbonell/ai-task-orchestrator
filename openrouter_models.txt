@@ -1,0 +1,340 @@
+Modelos disponibles (338):
+------------------------------------------------------------
+  google/gemini-3.1-pro-preview                                | chat         | Google: Gemini 3.1 Pro Preview
+  anthropic/claude-sonnet-4.6                                  | chat         | Anthropic: Claude Sonnet 4.6
+  qwen/qwen3.5-plus-02-15                                      | chat         | Qwen: Qwen3.5 Plus 2026-02-15
+  qwen/qwen3.5-397b-a17b                                       | chat         | Qwen: Qwen3.5 397B A17B
+  minimax/minimax-m2.5                                         | chat         | MiniMax: MiniMax M2.5
+  z-ai/glm-5                                                   | chat         | Z.ai: GLM 5
+  qwen/qwen3-max-thinking                                      | chat         | Qwen: Qwen3 Max Thinking
+  openrouter/aurora-alpha                                      | chat         | Aurora Alpha
+  anthropic/claude-opus-4.6                                    | chat         | Anthropic: Claude Opus 4.6
+  qwen/qwen3-coder-next                                        | chat         | Qwen: Qwen3 Coder Next
+  openrouter/free                                              | chat         | Free Models Router
+  stepfun/step-3.5-flash:free                                  | chat         | StepFun: Step 3.5 Flash (free)
+  stepfun/step-3.5-flash                                       | chat         | StepFun: Step 3.5 Flash
+  arcee-ai/trinity-large-preview:free                          | chat         | Arcee AI: Trinity Large Preview (free)
+  moonshotai/kimi-k2.5                                         | chat         | MoonshotAI: Kimi K2.5
+  upstage/solar-pro-3:free                                     | chat         | Upstage: Solar Pro 3 (free)
+  minimax/minimax-m2-her                                       | chat         | MiniMax: MiniMax M2-her
+  writer/palmyra-x5                                            | chat         | Writer: Palmyra X5
+  liquid/lfm-2.5-1.2b-thinking:free                            | chat         | LiquidAI: LFM2.5-1.2B-Thinking (free)
+  liquid/lfm-2.5-1.2b-instruct:free                            | chat         | LiquidAI: LFM2.5-1.2B-Instruct (free)
+  openai/gpt-audio                                             | chat         | OpenAI: GPT Audio
+  openai/gpt-audio-mini                                        | chat         | OpenAI: GPT Audio Mini
+  z-ai/glm-4.7-flash                                           | chat         | Z.ai: GLM 4.7 Flash
+  openai/gpt-5.2-codex                                         | chat         | OpenAI: GPT-5.2-Codex
+  allenai/molmo-2-8b                                           | chat         | AllenAI: Molmo2 8B
+  allenai/olmo-3.1-32b-instruct                                | chat         | AllenAI: Olmo 3.1 32B Instruct
+  bytedance-seed/seed-1.6-flash                                | chat         | ByteDance Seed: Seed 1.6 Flash
+  bytedance-seed/seed-1.6                                      | chat         | ByteDance Seed: Seed 1.6
+  minimax/minimax-m2.1                                         | chat         | MiniMax: MiniMax M2.1
+  z-ai/glm-4.7                                                 | chat         | Z.ai: GLM 4.7
+  google/gemini-3-flash-preview                                | chat         | Google: Gemini 3 Flash Preview
+  mistralai/mistral-small-creative                             | chat         | Mistral: Mistral Small Creative
+  allenai/olmo-3.1-32b-think                                   | chat         | AllenAI: Olmo 3.1 32B Think
+  xiaomi/mimo-v2-flash                                         | chat         | Xiaomi: MiMo-V2-Flash
+  nvidia/nemotron-3-nano-30b-a3b:free                          | chat         | NVIDIA: Nemotron 3 Nano 30B A3B (free)
+  nvidia/nemotron-3-nano-30b-a3b                               | chat         | NVIDIA: Nemotron 3 Nano 30B A3B
+  openai/gpt-5.2-chat                                          | chat         | OpenAI: GPT-5.2 Chat
+  openai/gpt-5.2-pro                                           | chat         | OpenAI: GPT-5.2 Pro
+  openai/gpt-5.2                                               | chat         | OpenAI: GPT-5.2
+  mistralai/devstral-2512                                      | chat         | Mistral: Devstral 2 2512
+  relace/relace-search                                         | chat         | Relace: Relace Search
+  z-ai/glm-4.6v                                                | chat         | Z.ai: GLM 4.6V
+  nex-agi/deepseek-v3.1-nex-n1                                 | chat         | Nex AGI: DeepSeek V3.1 Nex N1
+  essentialai/rnj-1-instruct                                   | chat         | EssentialAI: Rnj 1 Instruct
+  openrouter/bodybuilder                                       | chat         | Body Builder (beta)
+  openai/gpt-5.1-codex-max                                     | chat         | OpenAI: GPT-5.1-Codex-Max
+  amazon/nova-2-lite-v1                                        | chat         | Amazon: Nova 2 Lite
+  mistralai/ministral-14b-2512                                 | chat         | Mistral: Ministral 3 14B 2512
+  mistralai/ministral-8b-2512                                  | chat         | Mistral: Ministral 3 8B 2512
+  mistralai/ministral-3b-2512                                  | chat         | Mistral: Ministral 3 3B 2512
+  mistralai/mistral-large-2512                                 | chat         | Mistral: Mistral Large 3 2512
+  arcee-ai/trinity-mini:free                                   | chat         | Arcee AI: Trinity Mini (free)
+  arcee-ai/trinity-mini                                        | chat         | Arcee AI: Trinity Mini
+  deepseek/deepseek-v3.2-speciale                              | chat         | DeepSeek: DeepSeek V3.2 Speciale
+  deepseek/deepseek-v3.2                                       | chat         | DeepSeek: DeepSeek V3.2
+  prime-intellect/intellect-3                                  | chat         | Prime Intellect: INTELLECT-3
+  anthropic/claude-opus-4.5                                    | chat         | Anthropic: Claude Opus 4.5
+  allenai/olmo-3-32b-think                                     | chat         | AllenAI: Olmo 3 32B Think
+  allenai/olmo-3-7b-instruct                                   | chat         | AllenAI: Olmo 3 7B Instruct
+  allenai/olmo-3-7b-think                                      | chat         | AllenAI: Olmo 3 7B Think
+  google/gemini-3-pro-image-preview                            | chat         | Google: Nano Banana Pro (Gemini 3 Pro Image Preview)
+  x-ai/grok-4.1-fast                                           | chat         | xAI: Grok 4.1 Fast
+  google/gemini-3-pro-preview                                  | chat         | Google: Gemini 3 Pro Preview
+  deepcogito/cogito-v2.1-671b                                  | chat         | Deep Cogito: Cogito v2.1 671B
+  openai/gpt-5.1                                               | chat         | OpenAI: GPT-5.1
+  openai/gpt-5.1-chat                                          | chat         | OpenAI: GPT-5.1 Chat
+  openai/gpt-5.1-codex                                         | chat         | OpenAI: GPT-5.1-Codex
+  openai/gpt-5.1-codex-mini                                    | chat         | OpenAI: GPT-5.1-Codex-Mini
+  kwaipilot/kat-coder-pro                                      | chat         | Kwaipilot: KAT-Coder-Pro V1
+  moonshotai/kimi-k2-thinking                                  | chat         | MoonshotAI: Kimi K2 Thinking
+  amazon/nova-premier-v1                                       | chat         | Amazon: Nova Premier 1.0
+  perplexity/sonar-pro-search                                  | chat         | Perplexity: Sonar Pro Search
+  mistralai/voxtral-small-24b-2507                             | chat         | Mistral: Voxtral Small 24B 2507
+  openai/gpt-oss-safeguard-20b                                 | chat         | OpenAI: gpt-oss-safeguard-20b
+  nvidia/nemotron-nano-12b-v2-vl:free                          | chat         | NVIDIA: Nemotron Nano 12B 2 VL (free)
+  nvidia/nemotron-nano-12b-v2-vl                               | chat         | NVIDIA: Nemotron Nano 12B 2 VL
+  minimax/minimax-m2                                           | chat         | MiniMax: MiniMax M2
+  qwen/qwen3-vl-32b-instruct                                   | chat         | Qwen: Qwen3 VL 32B Instruct
+  liquid/lfm2-8b-a1b                                           | chat         | LiquidAI: LFM2-8B-A1B
+  liquid/lfm-2.2-6b                                            | chat         | LiquidAI: LFM2-2.6B
+  ibm-granite/granite-4.0-h-micro                              | chat         | IBM: Granite 4.0 Micro
+  openai/gpt-5-image-mini                                      | chat         | OpenAI: GPT-5 Image Mini
+  anthropic/claude-haiku-4.5                                   | chat         | Anthropic: Claude Haiku 4.5
+  qwen/qwen3-vl-8b-thinking                                    | chat         | Qwen: Qwen3 VL 8B Thinking
+  qwen/qwen3-vl-8b-instruct                                    | chat         | Qwen: Qwen3 VL 8B Instruct
+  openai/gpt-5-image                                           | chat         | OpenAI: GPT-5 Image
+  openai/o3-deep-research                                      | chat         | OpenAI: o3 Deep Research
+  openai/o4-mini-deep-research                                 | chat         | OpenAI: o4 Mini Deep Research
+  nvidia/llama-3.3-nemotron-super-49b-v1.5                     | chat         | NVIDIA: Llama 3.3 Nemotron Super 49B V1.5
+  baidu/ernie-4.5-21b-a3b-thinking                             | chat         | Baidu: ERNIE 4.5 21B A3B Thinking
+  google/gemini-2.5-flash-image                                | chat         | Google: Gemini 2.5 Flash Image (Nano Banana)
+  qwen/qwen3-vl-30b-a3b-thinking                               | chat         | Qwen: Qwen3 VL 30B A3B Thinking
+  qwen/qwen3-vl-30b-a3b-instruct                               | chat         | Qwen: Qwen3 VL 30B A3B Instruct
+  openai/gpt-5-pro                                             | chat         | OpenAI: GPT-5 Pro
+  z-ai/glm-4.6                                                 | chat         | Z.ai: GLM 4.6
+  z-ai/glm-4.6:exacto                                          | chat         | Z.ai: GLM 4.6 (exacto)
+  anthropic/claude-sonnet-4.5                                  | chat         | Anthropic: Claude Sonnet 4.5
+  deepseek/deepseek-v3.2-exp                                   | chat         | DeepSeek: DeepSeek V3.2 Exp
+  thedrummer/cydonia-24b-v4.1                                  | chat         | TheDrummer: Cydonia 24B V4.1
+  relace/relace-apply-3                                        | chat         | Relace: Relace Apply 3
+  google/gemini-2.5-flash-lite-preview-09-2025                 | chat         | Google: Gemini 2.5 Flash Lite Preview 09-2025
+  qwen/qwen3-vl-235b-a22b-thinking                             | chat         | Qwen: Qwen3 VL 235B A22B Thinking
+  qwen/qwen3-vl-235b-a22b-instruct                             | chat         | Qwen: Qwen3 VL 235B A22B Instruct
+  qwen/qwen3-max                                               | chat         | Qwen: Qwen3 Max
+  qwen/qwen3-coder-plus                                        | chat         | Qwen: Qwen3 Coder Plus
+  openai/gpt-5-codex                                           | chat         | OpenAI: GPT-5 Codex
+  deepseek/deepseek-v3.1-terminus:exacto                       | chat         | DeepSeek: DeepSeek V3.1 Terminus (exacto)
+  deepseek/deepseek-v3.1-terminus                              | chat         | DeepSeek: DeepSeek V3.1 Terminus
+  x-ai/grok-4-fast                                             | chat         | xAI: Grok 4 Fast
+  alibaba/tongyi-deepresearch-30b-a3b                          | chat         | Tongyi DeepResearch 30B A3B
+  qwen/qwen3-coder-flash                                       | chat         | Qwen: Qwen3 Coder Flash
+  opengvlab/internvl3-78b                                      | chat         | OpenGVLab: InternVL3 78B
+  qwen/qwen3-next-80b-a3b-thinking                             | chat         | Qwen: Qwen3 Next 80B A3B Thinking
+  qwen/qwen3-next-80b-a3b-instruct:free                        | chat         | Qwen: Qwen3 Next 80B A3B Instruct (free)
+  qwen/qwen3-next-80b-a3b-instruct                             | chat         | Qwen: Qwen3 Next 80B A3B Instruct
+  meituan/longcat-flash-chat                                   | chat         | Meituan: LongCat Flash Chat
+  qwen/qwen-plus-2025-07-28                                    | chat         | Qwen: Qwen Plus 0728
+  qwen/qwen-plus-2025-07-28:thinking                           | chat         | Qwen: Qwen Plus 0728 (thinking)
+  nvidia/nemotron-nano-9b-v2:free                              | chat         | NVIDIA: Nemotron Nano 9B V2 (free)
+  nvidia/nemotron-nano-9b-v2                                   | chat         | NVIDIA: Nemotron Nano 9B V2
+  moonshotai/kimi-k2-0905                                      | chat         | MoonshotAI: Kimi K2 0905
+  moonshotai/kimi-k2-0905:exacto                               | chat         | MoonshotAI: Kimi K2 0905 (exacto)
+  qwen/qwen3-30b-a3b-thinking-2507                             | chat         | Qwen: Qwen3 30B A3B Thinking 2507
+  x-ai/grok-code-fast-1                                        | chat         | xAI: Grok Code Fast 1
+  nousresearch/hermes-4-70b                                    | chat         | Nous: Hermes 4 70B
+  nousresearch/hermes-4-405b                                   | chat         | Nous: Hermes 4 405B
+  deepseek/deepseek-chat-v3.1                                  | chat         | DeepSeek: DeepSeek V3.1
+  openai/gpt-4o-audio-preview                                  | chat         | OpenAI: GPT-4o Audio
+  mistralai/mistral-medium-3.1                                 | chat         | Mistral: Mistral Medium 3.1
+  baidu/ernie-4.5-21b-a3b                                      | chat         | Baidu: ERNIE 4.5 21B A3B
+  baidu/ernie-4.5-vl-28b-a3b                                   | chat         | Baidu: ERNIE 4.5 VL 28B A3B
+  z-ai/glm-4.5v                                                | chat         | Z.ai: GLM 4.5V
+  ai21/jamba-large-1.7                                         | chat         | AI21: Jamba Large 1.7
+  openai/gpt-5-chat                                            | chat         | OpenAI: GPT-5 Chat
+  openai/gpt-5                                                 | chat         | OpenAI: GPT-5
+  openai/gpt-5-mini                                            | chat         | OpenAI: GPT-5 Mini
+  openai/gpt-5-nano                                            | chat         | OpenAI: GPT-5 Nano
+  openai/gpt-oss-120b:free                                     | chat         | OpenAI: gpt-oss-120b (free)
+  openai/gpt-oss-120b                                          | chat         | OpenAI: gpt-oss-120b
+  openai/gpt-oss-120b:exacto                                   | chat         | OpenAI: gpt-oss-120b (exacto)
+  openai/gpt-oss-20b:free                                      | chat         | OpenAI: gpt-oss-20b (free)
+  openai/gpt-oss-20b                                           | chat         | OpenAI: gpt-oss-20b
+  anthropic/claude-opus-4.1                                    | chat         | Anthropic: Claude Opus 4.1
+  mistralai/codestral-2508                                     | chat         | Mistral: Codestral 2508
+  qwen/qwen3-coder-30b-a3b-instruct                            | chat         | Qwen: Qwen3 Coder 30B A3B Instruct
+  qwen/qwen3-30b-a3b-instruct-2507                             | chat         | Qwen: Qwen3 30B A3B Instruct 2507
+  z-ai/glm-4.5                                                 | chat         | Z.ai: GLM 4.5
+  z-ai/glm-4.5-air:free                                        | chat         | Z.ai: GLM 4.5 Air (free)
+  z-ai/glm-4.5-air                                             | chat         | Z.ai: GLM 4.5 Air
+  qwen/qwen3-235b-a22b-thinking-2507                           | chat         | Qwen: Qwen3 235B A22B Thinking 2507
+  z-ai/glm-4-32b                                               | chat         | Z.ai: GLM 4 32B 
+  qwen/qwen3-coder:free                                        | chat         | Qwen: Qwen3 Coder 480B A35B (free)
+  qwen/qwen3-coder                                             | chat         | Qwen: Qwen3 Coder 480B A35B
+  qwen/qwen3-coder:exacto                                      | chat         | Qwen: Qwen3 Coder 480B A35B (exacto)
+  bytedance/ui-tars-1.5-7b                                     | chat         | ByteDance: UI-TARS 7B 
+  google/gemini-2.5-flash-lite                                 | chat         | Google: Gemini 2.5 Flash Lite
+  qwen/qwen3-235b-a22b-2507                                    | chat         | Qwen: Qwen3 235B A22B Instruct 2507
+  switchpoint/router                                           | chat         | Switchpoint Router
+  moonshotai/kimi-k2                                           | chat         | MoonshotAI: Kimi K2 0711
+  mistralai/devstral-medium                                    | chat         | Mistral: Devstral Medium
+  mistralai/devstral-small                                     | chat         | Mistral: Devstral Small 1.1
+  cognitivecomputations/dolphin-mistral-24b-venice-edition:free | chat         | Venice: Uncensored (free)
+  x-ai/grok-4                                                  | chat         | xAI: Grok 4
+  google/gemma-3n-e2b-it:free                                  | chat         | Google: Gemma 3n 2B (free)
+  tencent/hunyuan-a13b-instruct                                | chat         | Tencent: Hunyuan A13B Instruct
+  tngtech/deepseek-r1t2-chimera                                | chat         | TNG: DeepSeek R1T2 Chimera
+  morph/morph-v3-large                                         | chat         | Morph: Morph V3 Large
+  morph/morph-v3-fast                                          | chat         | Morph: Morph V3 Fast
+  baidu/ernie-4.5-vl-424b-a47b                                 | chat         | Baidu: ERNIE 4.5 VL 424B A47B 
+  baidu/ernie-4.5-300b-a47b                                    | chat         | Baidu: ERNIE 4.5 300B A47B 
+  inception/mercury                                            | chat         | Inception: Mercury
+  mistralai/mistral-small-3.2-24b-instruct                     | chat         | Mistral: Mistral Small 3.2 24B
+  minimax/minimax-m1                                           | chat         | MiniMax: MiniMax M1
+  google/gemini-2.5-flash                                      | chat         | Google: Gemini 2.5 Flash
+  google/gemini-2.5-pro                                        | chat         | Google: Gemini 2.5 Pro
+  openai/o3-pro                                                | chat         | OpenAI: o3 Pro
+  x-ai/grok-3-mini                                             | chat         | xAI: Grok 3 Mini
+  x-ai/grok-3                                                  | chat         | xAI: Grok 3
+  google/gemini-2.5-pro-preview                                | chat         | Google: Gemini 2.5 Pro Preview 06-05
+  deepseek/deepseek-r1-0528:free                               | chat         | DeepSeek: R1 0528 (free)
+  deepseek/deepseek-r1-0528                                    | chat         | DeepSeek: R1 0528
+  anthropic/claude-opus-4                                      | chat         | Anthropic: Claude Opus 4
+  anthropic/claude-sonnet-4                                    | chat         | Anthropic: Claude Sonnet 4
+  google/gemma-3n-e4b-it:free                                  | chat         | Google: Gemma 3n 4B (free)
+  google/gemma-3n-e4b-it                                       | chat         | Google: Gemma 3n 4B
+  mistralai/mistral-medium-3                                   | chat         | Mistral: Mistral Medium 3
+  google/gemini-2.5-pro-preview-05-06                          | chat         | Google: Gemini 2.5 Pro Preview 05-06
+  arcee-ai/spotlight                                           | chat         | Arcee AI: Spotlight
+  arcee-ai/maestro-reasoning                                   | chat         | Arcee AI: Maestro Reasoning
+  arcee-ai/virtuoso-large                                      | chat         | Arcee AI: Virtuoso Large
+  arcee-ai/coder-large                                         | chat         | Arcee AI: Coder Large
+  inception/mercury-coder                                      | chat         | Inception: Mercury Coder
+  qwen/qwen3-4b:free                                           | chat         | Qwen: Qwen3 4B (free)
+  meta-llama/llama-guard-4-12b                                 | chat         | Meta: Llama Guard 4 12B
+  qwen/qwen3-30b-a3b                                           | chat         | Qwen: Qwen3 30B A3B
+  qwen/qwen3-8b                                                | chat         | Qwen: Qwen3 8B
+  qwen/qwen3-14b                                               | chat         | Qwen: Qwen3 14B
+  qwen/qwen3-32b                                               | chat         | Qwen: Qwen3 32B
+  qwen/qwen3-235b-a22b                                         | chat         | Qwen: Qwen3 235B A22B
+  openai/o4-mini-high                                          | chat         | OpenAI: o4 Mini High
+  openai/o3                                                    | chat         | OpenAI: o3
+  openai/o4-mini                                               | chat         | OpenAI: o4 Mini
+  qwen/qwen2.5-coder-7b-instruct                               | chat         | Qwen: Qwen2.5 Coder 7B Instruct
+  openai/gpt-4.1                                               | chat         | OpenAI: GPT-4.1
+  openai/gpt-4.1-mini                                          | chat         | OpenAI: GPT-4.1 Mini
+  openai/gpt-4.1-nano                                          | chat         | OpenAI: GPT-4.1 Nano
+  eleutherai/llemma_7b                                         | chat         | EleutherAI: Llemma 7b
+  alfredpros/codellama-7b-instruct-solidity                    | chat         | AlfredPros: CodeLLaMa 7B Instruct Solidity
+  x-ai/grok-3-mini-beta                                        | chat         | xAI: Grok 3 Mini Beta
+  x-ai/grok-3-beta                                             | chat         | xAI: Grok 3 Beta
+  nvidia/llama-3.1-nemotron-ultra-253b-v1                      | chat         | NVIDIA: Llama 3.1 Nemotron Ultra 253B v1
+  meta-llama/llama-4-maverick                                  | chat         | Meta: Llama 4 Maverick
+  meta-llama/llama-4-scout                                     | chat         | Meta: Llama 4 Scout
+  qwen/qwen2.5-vl-32b-instruct                                 | chat         | Qwen: Qwen2.5 VL 32B Instruct
+  deepseek/deepseek-chat-v3-0324                               | chat         | DeepSeek: DeepSeek V3 0324
+  openai/o1-pro                                                | chat         | OpenAI: o1-pro
+  mistralai/mistral-small-3.1-24b-instruct:free                | chat         | Mistral: Mistral Small 3.1 24B (free)
+  mistralai/mistral-small-3.1-24b-instruct                     | chat         | Mistral: Mistral Small 3.1 24B
+  allenai/olmo-2-0325-32b-instruct                             | chat         | AllenAI: Olmo 2 32B Instruct
+  google/gemma-3-4b-it:free                                    | chat         | Google: Gemma 3 4B (free)
+  google/gemma-3-4b-it                                         | chat         | Google: Gemma 3 4B
+  google/gemma-3-12b-it:free                                   | chat         | Google: Gemma 3 12B (free)
+  google/gemma-3-12b-it                                        | chat         | Google: Gemma 3 12B
+  cohere/command-a                                             | chat         | Cohere: Command A
+  openai/gpt-4o-mini-search-preview                            | chat         | OpenAI: GPT-4o-mini Search Preview
+  openai/gpt-4o-search-preview                                 | chat         | OpenAI: GPT-4o Search Preview
+  google/gemma-3-27b-it:free                                   | chat         | Google: Gemma 3 27B (free)
+  google/gemma-3-27b-it                                        | chat         | Google: Gemma 3 27B
+  thedrummer/skyfall-36b-v2                                    | chat         | TheDrummer: Skyfall 36B V2
+  perplexity/sonar-reasoning-pro                               | chat         | Perplexity: Sonar Reasoning Pro
+  perplexity/sonar-pro                                         | chat         | Perplexity: Sonar Pro
+  perplexity/sonar-deep-research                               | chat         | Perplexity: Sonar Deep Research
+  qwen/qwq-32b                                                 | chat         | Qwen: QwQ 32B
+  google/gemini-2.0-flash-lite-001                             | chat         | Google: Gemini 2.0 Flash Lite
+  anthropic/claude-3.7-sonnet                                  | chat         | Anthropic: Claude 3.7 Sonnet
+  anthropic/claude-3.7-sonnet:thinking                         | chat         | Anthropic: Claude 3.7 Sonnet (thinking)
+  mistralai/mistral-saba                                       | chat         | Mistral: Saba
+  meta-llama/llama-guard-3-8b                                  | chat         | Llama Guard 3 8B
+  openai/o3-mini-high                                          | chat         | OpenAI: o3 Mini High
+  google/gemini-2.0-flash-001                                  | chat         | Google: Gemini 2.0 Flash
+  qwen/qwen-vl-plus                                            | chat         | Qwen: Qwen VL Plus
+  aion-labs/aion-1.0                                           | chat         | AionLabs: Aion-1.0
+  aion-labs/aion-1.0-mini                                      | chat         | AionLabs: Aion-1.0-Mini
+  aion-labs/aion-rp-llama-3.1-8b                               | chat         | AionLabs: Aion-RP 1.0 (8B)
+  qwen/qwen-vl-max                                             | chat         | Qwen: Qwen VL Max
+  qwen/qwen-turbo                                              | chat         | Qwen: Qwen-Turbo
+  qwen/qwen2.5-vl-72b-instruct                                 | chat         | Qwen: Qwen2.5 VL 72B Instruct
+  qwen/qwen-plus                                               | chat         | Qwen: Qwen-Plus
+  qwen/qwen-max                                                | chat         | Qwen: Qwen-Max 
+  openai/o3-mini                                               | chat         | OpenAI: o3 Mini
+  mistralai/mistral-small-24b-instruct-2501                    | chat         | Mistral: Mistral Small 3
+  deepseek/deepseek-r1-distill-qwen-32b                        | chat         | DeepSeek: R1 Distill Qwen 32B
+  perplexity/sonar                                             | chat         | Perplexity: Sonar
+  deepseek/deepseek-r1-distill-llama-70b                       | chat         | DeepSeek: R1 Distill Llama 70B
+  deepseek/deepseek-r1                                         | chat         | DeepSeek: R1
+  minimax/minimax-01                                           | chat         | MiniMax: MiniMax-01
+  microsoft/phi-4                                              | chat         | Microsoft: Phi 4
+  sao10k/l3.1-70b-hanami-x1                                    | chat         | Sao10K: Llama 3.1 70B Hanami x1
+  deepseek/deepseek-chat                                       | chat         | DeepSeek: DeepSeek V3
+  sao10k/l3.3-euryale-70b                                      | chat         | Sao10K: Llama 3.3 Euryale 70B
+  openai/o1                                                    | chat         | OpenAI: o1
+  cohere/command-r7b-12-2024                                   | chat         | Cohere: Command R7B (12-2024)
+  meta-llama/llama-3.3-70b-instruct:free                       | chat         | Meta: Llama 3.3 70B Instruct (free)
+  meta-llama/llama-3.3-70b-instruct                            | chat         | Meta: Llama 3.3 70B Instruct
+  amazon/nova-lite-v1                                          | chat         | Amazon: Nova Lite 1.0
+  amazon/nova-micro-v1                                         | chat         | Amazon: Nova Micro 1.0
+  amazon/nova-pro-v1                                           | chat         | Amazon: Nova Pro 1.0
+  openai/gpt-4o-2024-11-20                                     | chat         | OpenAI: GPT-4o (2024-11-20)
+  mistralai/mistral-large-2411                                 | chat         | Mistral Large 2411
+  mistralai/mistral-large-2407                                 | chat         | Mistral Large 2407
+  mistralai/pixtral-large-2411                                 | chat         | Mistral: Pixtral Large 2411
+  qwen/qwen-2.5-coder-32b-instruct                             | chat         | Qwen2.5 Coder 32B Instruct
+  raifle/sorcererlm-8x22b                                      | chat         | SorcererLM 8x22B
+  thedrummer/unslopnemo-12b                                    | chat         | TheDrummer: UnslopNemo 12B
+  anthropic/claude-3.5-haiku                                   | chat         | Anthropic: Claude 3.5 Haiku
+  anthracite-org/magnum-v4-72b                                 | chat         | Magnum v4 72B
+  anthropic/claude-3.5-sonnet                                  | chat         | Anthropic: Claude 3.5 Sonnet
+  qwen/qwen-2.5-7b-instruct                                    | chat         | Qwen: Qwen2.5 7B Instruct
+  nvidia/llama-3.1-nemotron-70b-instruct                       | chat         | NVIDIA: Llama 3.1 Nemotron 70B Instruct
+  inflection/inflection-3-pi                                   | chat         | Inflection: Inflection 3 Pi
+  inflection/inflection-3-productivity                         | chat         | Inflection: Inflection 3 Productivity
+  thedrummer/rocinante-12b                                     | chat         | TheDrummer: Rocinante 12B
+  meta-llama/llama-3.2-3b-instruct:free                        | chat         | Meta: Llama 3.2 3B Instruct (free)
+  meta-llama/llama-3.2-3b-instruct                             | chat         | Meta: Llama 3.2 3B Instruct
+  meta-llama/llama-3.2-1b-instruct                             | chat         | Meta: Llama 3.2 1B Instruct
+  meta-llama/llama-3.2-11b-vision-instruct                     | chat         | Meta: Llama 3.2 11B Vision Instruct
+  qwen/qwen-2.5-72b-instruct                                   | chat         | Qwen2.5 72B Instruct
+  neversleep/llama-3.1-lumimaid-8b                             | chat         | NeverSleep: Lumimaid v0.2 8B
+  cohere/command-r-08-2024                                     | chat         | Cohere: Command R (08-2024)
+  cohere/command-r-plus-08-2024                                | chat         | Cohere: Command R+ (08-2024)
+  sao10k/l3.1-euryale-70b                                      | chat         | Sao10K: Llama 3.1 Euryale 70B v2.2
+  qwen/qwen-2.5-vl-7b-instruct                                 | chat         | Qwen: Qwen2.5-VL 7B Instruct
+  nousresearch/hermes-3-llama-3.1-70b                          | chat         | Nous: Hermes 3 70B Instruct
+  nousresearch/hermes-3-llama-3.1-405b:free                    | chat         | Nous: Hermes 3 405B Instruct (free)
+  nousresearch/hermes-3-llama-3.1-405b                         | chat         | Nous: Hermes 3 405B Instruct
+  sao10k/l3-lunaris-8b                                         | chat         | Sao10K: Llama 3 8B Lunaris
+  openai/gpt-4o-2024-08-06                                     | chat         | OpenAI: GPT-4o (2024-08-06)
+  meta-llama/llama-3.1-405b                                    | chat         | Meta: Llama 3.1 405B (base)
+  meta-llama/llama-3.1-8b-instruct                             | chat         | Meta: Llama 3.1 8B Instruct
+  meta-llama/llama-3.1-405b-instruct                           | chat         | Meta: Llama 3.1 405B Instruct
+  meta-llama/llama-3.1-70b-instruct                            | chat         | Meta: Llama 3.1 70B Instruct
+  mistralai/mistral-nemo                                       | chat         | Mistral: Mistral Nemo
+  openai/gpt-4o-mini-2024-07-18                                | chat         | OpenAI: GPT-4o-mini (2024-07-18)
+  openai/gpt-4o-mini                                           | chat         | OpenAI: GPT-4o-mini
+  google/gemma-2-27b-it                                        | chat         | Google: Gemma 2 27B
+  google/gemma-2-9b-it                                         | chat         | Google: Gemma 2 9B
+  sao10k/l3-euryale-70b                                        | chat         | Sao10k: Llama 3 Euryale 70B v2.1
+  nousresearch/hermes-2-pro-llama-3-8b                         | chat         | NousResearch: Hermes 2 Pro - Llama-3 8B
+  mistralai/mistral-7b-instruct                                | chat         | Mistral: Mistral 7B Instruct
+  mistralai/mistral-7b-instruct-v0.3                           | chat         | Mistral: Mistral 7B Instruct v0.3
+  meta-llama/llama-guard-2-8b                                  | chat         | Meta: LlamaGuard 2 8B
+  openai/gpt-4o-2024-05-13                                     | chat         | OpenAI: GPT-4o (2024-05-13)
+  openai/gpt-4o                                                | chat         | OpenAI: GPT-4o
+  openai/gpt-4o:extended                                       | chat         | OpenAI: GPT-4o (extended)
+  meta-llama/llama-3-70b-instruct                              | chat         | Meta: Llama 3 70B Instruct
+  meta-llama/llama-3-8b-instruct                               | chat         | Meta: Llama 3 8B Instruct
+  mistralai/mixtral-8x22b-instruct                             | chat         | Mistral: Mixtral 8x22B Instruct
+  microsoft/wizardlm-2-8x22b                                   | chat         | WizardLM-2 8x22B
+  openai/gpt-4-turbo                                           | chat         | OpenAI: GPT-4 Turbo
+  anthropic/claude-3-haiku                                     | chat         | Anthropic: Claude 3 Haiku
+  mistralai/mistral-large                                      | chat         | Mistral Large
+  openai/gpt-3.5-turbo-0613                                    | chat         | OpenAI: GPT-3.5 Turbo (older v0613)
+  openai/gpt-4-turbo-preview                                   | chat         | OpenAI: GPT-4 Turbo Preview
+  mistralai/mistral-7b-instruct-v0.2                           | chat         | Mistral: Mistral 7B Instruct v0.2
+  mistralai/mixtral-8x7b-instruct                              | chat         | Mistral: Mixtral 8x7B Instruct
+  neversleep/noromaid-20b                                      | chat         | Noromaid 20B
+  alpindale/goliath-120b                                       | chat         | Goliath 120B
+  openrouter/auto                                              | chat         | Auto Router
+  openai/gpt-4-1106-preview                                    | chat         | OpenAI: GPT-4 Turbo (older v1106)
+  openai/gpt-3.5-turbo-instruct                                | chat         | OpenAI: GPT-3.5 Turbo Instruct
+  mistralai/mistral-7b-instruct-v0.1                           | chat         | Mistral: Mistral 7B Instruct v0.1
+  openai/gpt-3.5-turbo-16k                                     | chat         | OpenAI: GPT-3.5 Turbo 16k
+  mancer/weaver                                                | chat         | Mancer: Weaver (alpha)
+  undi95/remm-slerp-l2-13b                                     | chat         | ReMM SLERP 13B
+  gryphe/mythomax-l2-13b                                       | chat         | MythoMax 13B
+  openai/gpt-4-0314                                            | chat         | OpenAI: GPT-4 (older v0314)
+  openai/gpt-4                                                 | chat         | OpenAI: GPT-4
+  openai/gpt-3.5-turbo                                         | chat         | OpenAI: GPT-3.5 Turbo

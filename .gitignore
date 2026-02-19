@@ -49,6 +49,5 @@ yarn.lock
 # Status files
 task-status.json
 
-# Agents
-.zencoder/
-.zenflow/
+# Environment variables
+.env

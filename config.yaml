@@ -5,7 +5,8 @@ orchestrator:
   log_dir: ./logs
   
 opencode:
-  model: moonshotai/kimi-k2.5
+  model: kimi-k2.5-free
+  provider: zen
   agent: build
   timeout: 300
   base_url: null  # null para usar CLI local, o "http://localhost:4096" para servidor

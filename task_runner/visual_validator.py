@@ -2,22 +2,33 @@
 Visual Validator - Valida screenshots usando IA con visión
 """
 
+import os
+import base64
 import logging
 from typing import Dict, List
-from .opencode_runner import OpenCodeRunner
-
+from .tool_calling_agent import ToolCallingAgent
 
 class VisualValidator:
-    """Valida screenshots visualmente usando OpenCode con modelos de visión"""
+    """Valida screenshots visualmente usando el ToolCallingAgent API"""
     
     def __init__(self, config: Dict, opencode_config: Dict):
         self.config = config
         self.enabled = config.get("enabled", True)
-        self.model = config.get("model", "anthropic/claude-3.5-sonnet")
-        self.timeout = config.get("timeout", 60)
-        self.opencode = OpenCodeRunner(opencode_config)
+        
         self.logger = logging.getLogger("VisualValidator")
+        
+        # Inicializar el Agente nativo
+        self.agent = ToolCallingAgent(
+            model=config.get("model", opencode_config.get("model", "kimi-k2.5-free")),
+            provider=opencode_config.get("provider", "zen"),
+            max_iterations=3 # Solo necesitamos validacion directa, no herramientas
+        )
     
+    def _encode_image(self, image_path: str) -> str:
+        """Convierte una imagen a base64 para la API de OpenAI/OpenRouter"""
+        with open(image_path, "rb") as image_file:
+            return base64.b64encode(image_file.read()).decode('utf-8')
+
     def validate(
         self,
         screenshot_path: str,
@@ -25,18 +36,7 @@ class VisualValidator:
         criteria: List[str]
     ) -> Dict:
         """
-        Valida un screenshot visualmente
-        
-        Args:
-            screenshot_path: Ruta al archivo PNG
-            context: Descripción del contexto/propósito
-            criteria: Lista de criterios a verificar
-        
-        Returns:
-            Dict con:
-                - valid: bool
-                - feedback: str
-                - raw_response: str
+        Valida un screenshot visualmente usando API
         """
         if not self.enabled:
             return {
@@ -44,13 +44,22 @@ class VisualValidator:
                 "feedback": "Validación visual deshabilitada",
                 "raw_response": ""
             }
+            
+        if not os.path.exists(screenshot_path):
+            return {
+                "valid": False,
+                "feedback": f"Screenshot no encontrado: {screenshot_path}",
+                "raw_response": ""
+            }
         
         self.logger.info(f"👁️  Validando visualmente: {screenshot_path}")
         
-        # Construir prompt detallado
+        # Construir prompt
         criteria_text = "\n".join([f"{i+1}. {c}" for i, c in enumerate(criteria)])
         
-        prompt = f"""Analiza esta captura de pantalla de una aplicación web y evalúa su calidad visual.
+        system_prompt = "Eres un QA visual experto. Analiza la imagen, evalúa los criterios y finaliza OBLIGATORIAMENTE usando la herramienta 'finish_task' indicando en status 'completed' si pasa, o 'failed' si no pasa la validación visual, y pon tus observaciones en summary."
+        
+        task_prompt = f"""Analiza esta captura de pantalla de una aplicación web y evalúa su calidad visual.
 
 ## Contexto
 {context}
@@ -59,46 +68,51 @@ class VisualValidator:
 {criteria_text}
 
 ## Instrucciones de Análisis
-Por favor, analiza la imagen y verifica:
-1. Que todos los elementos mencionados en los criterios estén presentes
-2. Que el layout sea correcto (sin elementos desalineados o cortados)
-3. Que los colores y estilos sean consistentes
-4. Que no haya errores visuales evidentes
-5. Que la interfaz sea usable (tamaños de botones adecuados, contraste legible)
-
-## Formato de Respuesta OBLIGATORIO
-Responde EXACTAMENTE en este formato:
-
-```
-VALIDATION: PASS o FAIL
-
-OBSERVACIONES:
-- [Elemento 1]: Estado (presente/ausente/correcto/incorrecto)
-- [Elemento 2]: Estado
-...
-
-FEEDBACK:
-[Explicación detallada de lo que observas y por qué pasa o falla la validación]
-```
-"""
-        
+Verifica que los elementos presentes cumplan el layout, color y tamaño adecuados sin superponerse.
+"""     
+        # Configurar mensaje con multimodalidad nativa
         try:
-            # Ejecutar validación con OpenCode incluyendo el archivo
-            result = self.opencode.validate_screenshot(
-                screenshot_path,
-                context,
-                criteria
-            )
+            base64_img = self._encode_image(screenshot_path)
             
-            self.logger.info(f"✅ Validación completada: {'PASS' if result['valid'] else 'FAIL'}")
+            # Formato estándar de Chat Completion para imágenes
+            image_message = {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": task_prompt},
+                    {
+                        "type": "image_url",
+                        "image_url": {
+                            "url": f"data:image/png;base64,{base64_img}"
+                        }
+                    }
+                ]
+            }
             
-            return result
+            # Ejecutar loop del agente inyectando la imagen manualmente a los mensajes iniciales
+            self.agent.messages = [
+                {"role": "system", "content": system_prompt},
+                image_message
+            ]
+            
+            # Truco: Invocamos el loop interno pasando por alto el setting default del prompt
+            result = self.agent.run_task(system_prompt=system_prompt, task_prompt="Evalúa la imagen enviada.")
+            
+            # Parseamos resultado
+            passed = result.get("status") == "completed"
+            
+            self.logger.info(f"✅ Validación completada: {'PASS' if passed else 'FAIL'}")
+            
+            return {
+                "valid": passed,
+                "feedback": result.get("summary", ""),
+                "raw_response": result.get("summary", "")
+            }
             
         except Exception as e:
             self.logger.error(f"❌ Error en validación visual: {e}")
             return {
                 "valid": False,
-                "feedback": f"Error durante validación: {str(e)}",
+                "feedback": f"Error durante validación API: {str(e)}",
                 "raw_response": "",
                 "error": str(e)
             }

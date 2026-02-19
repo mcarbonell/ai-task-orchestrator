@@ -1,0 +1,36 @@
+Modelos disponibles (34):
+------------------------------------------------------------
+  claude-opus-4-6                | messages     | 
+  claude-opus-4-5                | messages     | 
+  claude-opus-4-1                | messages     | 
+  claude-sonnet-4-6              | messages     | 
+  claude-sonnet-4-5              | messages     | 
+  claude-sonnet-4                | messages     | 
+  claude-3-5-haiku               | messages     | 
+  claude-haiku-4-5               | messages     | 
+  gemini-3.1-pro                 | chat         | 
+  gemini-3-pro                   | google       | 
+  gemini-3-flash                 | google       | 
+  gpt-5.2                        | responses    | 
+  gpt-5.2-codex                  | responses    | 
+  gpt-5.1                        | responses    | 
+  gpt-5.1-codex-max              | responses    | 
+  gpt-5.1-codex                  | responses    | 
+  gpt-5.1-codex-mini             | responses    | 
+  gpt-5                          | responses    | 
+  gpt-5-codex                    | responses    | 
+  gpt-5-nano                     | responses    | 
+  glm-5                          | chat         | 
+  glm-4.7                        | chat         | 
+  glm-4.6                        | chat         | 
+  minimax-m2.5                   | chat         | 
+  minimax-m2.5-free              | chat         | 
+  minimax-m2.1                   | chat         | 
+  minimax-m2.1-free              | chat         | 
+  kimi-k2.5                      | chat         | 
+  kimi-k2.5-free                 | chat         | 
+  kimi-k2                        | chat         | 
+  kimi-k2-thinking               | chat         | 
+  trinity-large-preview-free     | chat         | 
+  big-pickle                     | chat         | 
+  glm-5-free                     | chat         | 
