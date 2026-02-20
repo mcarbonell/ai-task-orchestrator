@@ -7,7 +7,7 @@
 ### Reportar Bugs
 
 1. Verifica que el bug no esté ya reportado
-2. Abre un [Issue](https://github.com/tuusuario/ai-task-orchestrator/issues) con:
+2. Abre un [Issue](https://github.com/mcarbonell/ai-task-orchestrator/issues) con:
    - Descripción clara del problema
    - Pasos para reproducir
    - Comportamiento esperado vs actual
@@ -66,6 +66,6 @@ mypy task_runner/
 
 ## Preguntas?
 
-Únete a las [Discusiones](https://github.com/tuusuario/ai-task-orchestrator/discussions) o abre un Issue.
+Únete a las [Discusiones](https://github.com/mcarbonell/ai-task-orchestrator/discussions) o abre un Issue.
 
 ¡Gracias! 🙏

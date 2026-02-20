@@ -369,7 +369,3 @@ run.bat init mi-proyecto
 cd mi-proyecto
 run.bat run
 ```
-
-⚠️ **IMPORTANTE:** No uses Git Bash/MINGW64 - OpenCode no funciona en ese terminal.
-
-¡Deja que la IA haga el trabajo!
