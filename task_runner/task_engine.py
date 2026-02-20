@@ -75,7 +75,8 @@ class TaskEngine:
         self.opencode = ToolCallingAgent(
             model=config.get("opencode", {}).get("model", "kimi-k2.5-free"),
             provider=config.get("opencode", {}).get("provider", "zen"),
-            max_iterations=config.get("orchestrator", {}).get("max_iterations", 15)
+            max_iterations=config.get("orchestrator", {}).get("max_iterations", 15),
+            tasks_dir=str(self.tasks_dir)
         )
         
         self.cdp = CDPWrapper(config.get("cdp", {}))
@@ -147,11 +148,12 @@ class TaskEngine:
     
     def _run_sequential(self):
         """Ejecuta tareas secuencialmente"""
+        max_retries = self.config.get("orchestrator", {}).get("max_retries", 3)
+        
         while True:
             ready_tasks = self.get_next_tasks()
             
             if not ready_tasks:
-                # Verificar si quedan tareas pendientes bloqueadas
                 pending_tasks = [t for t in self.tasks if t.status == "pending"]
                 if pending_tasks:
                     self.logger.warning(f"⚠️  {len(pending_tasks)} tareas bloqueadas por dependencias")
@@ -159,12 +161,23 @@ class TaskEngine:
                         self.logger.warning(f"   - {t.id}: depende de {t.dependencies}")
                 break
             
-            # Ejecutar primera tarea disponible
             task = ready_tasks[0]
-            success = self._execute_task(task)
+            retries = 0
             
-            if not success:
-                self.logger.warning(f"⚠️  Tarea {task.id} falló, continuando con siguientes...")
+            while retries < max_retries:
+                success = self._execute_task(task)
+                
+                if success:
+                    break
+                
+                retries += 1
+                if retries < max_retries:
+                    self.logger.warning(f"⚠️  Tarea {task.id} falló, reintento {retries}/{max_retries}...")
+                    task.status = "pending"
+                    task.error_message = None
+            
+            if retries >= max_retries and not success:
+                self.logger.error(f"❌ Tarea {task.id} falló después de {max_retries} intentos, continuando con siguientes...")
     
     def _run_parallel(self, max_workers: int):
         """Ejecuta tareas en paralelo donde sea posible"""

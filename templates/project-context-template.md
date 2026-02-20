@@ -1,105 +1,105 @@
 # Project Context
 
-## Descripción General
-[Describe brevemente qué hace este proyecto y su propósito]
+## Overview
+[Briefly describe what this project does and its purpose]
 
-## Stack Tecnológico
+## Tech Stack
 
 ### Frontend
 - Framework: [React/Vue/Angular/Svelte/etc.]
-- Lenguaje: [TypeScript/JavaScript]
-- Estilos: [CSS Modules/Styled Components/Tailwind/etc.]
+- Language: [TypeScript/JavaScript]
+- Styling: [CSS Modules/Styled Components/Tailwind/etc.]
 - Testing: [Jest/Vitest/React Testing Library]
 
-### Backend (si aplica)
+### Backend (if applicable)
 - Runtime: [Node.js/Python/Go/etc.]
 - Framework: [Express/FastAPI/etc.]
-- Base de datos: [PostgreSQL/MongoDB/etc.]
+- Database: [PostgreSQL/MongoDB/etc.]
 
-### Herramientas
+### Tools
 - Build: [Vite/Webpack/etc.]
 - Package Manager: [npm/yarn/pnpm]
 - Linting: [ESLint/Prettier]
 
-## Convenciones de Código
+## Code Conventions
 
-### Estructura de Archivos
+### File Structure
 ```
 src/
-├── components/     # Componentes React
-├── pages/         # Páginas/rutas
+├── components/     # React components
+├── pages/         # Pages/routes
 ├── hooks/         # Custom hooks
-├── utils/         # Utilidades
-├── styles/        # Estilos globales
-└── types/         # Tipos TypeScript
+├── utils/         # Utilities
+├── styles/        # Global styles
+└── types/         # TypeScript types
 ```
 
-### Estilo de Código
-- Usar TypeScript estricto
-- Nombres de componentes en PascalCase
-- Nombres de funciones en camelCase
-- Constantes en UPPER_SNAKE_CASE
-- Preferir arrow functions
-- Usar async/await en lugar de callbacks
+### Coding Style
+- Use strict TypeScript
+- Component names in PascalCase
+- Function names in camelCase
+- Constants in UPPER_SNAKE_CASE
+- Prefer arrow functions
+- Use async/await instead of callbacks
 
 ### Commits
-Seguir conventional commits:
-- `feat:` Nueva funcionalidad
-- `fix:` Corrección de bug
-- `docs:` Documentación
+Follow conventional commits:
+- `feat:` New feature
+- `fix:` Bug fix
+- `docs:` Documentation
 - `test:` Tests
-- `refactor:` Refactorización
+- `refactor:` Refactoring
 
-## Dependencias Principales
-[Lista de dependencias importantes y sus versiones]
+## Main Dependencies
+[List important dependencies and their versions]
 
-## Comandos Útiles
+## Useful Commands
 ```bash
-# Instalar dependencias
+# Install dependencies
 npm install
 
-# Desarrollo
+# Development
 npm run dev
 
 # Tests
 npm test
 
-# Build de producción
+# Production build
 npm run build
 ```
 
-## Configuración de Entorno
-### Variables de Entorno Necesarias
+## Environment Configuration
+### Required Environment Variables
 ```env
 # .env.example
 API_URL=http://localhost:3001
 DATABASE_URL=postgresql://...
 ```
 
-## Arquitectura
-[Diagrama o descripción de la arquitectura del proyecto]
+## Architecture
+[Diagram or description of project architecture]
 
-## API Endpoints (si aplica)
-[Lista de endpoints importantes]
+## API Endpoints (if applicable)
+[List of important endpoints]
 
-## Notas para IAs
-### Contexto Importante
-- [Información que las IAs deben saber]
-- [Decisiones arquitectónicas clave]
-- [Problemas conocidos y soluciones]
+## Notes for AIs
+### Important Context
+- [Information AIs should know]
+- [Key architectural decisions]
+- [Known issues and solutions]
 
-### Qué Evitar
-- [Prácticas no deseadas]
-- [Código legacy que no tocar]
-- [Dependencias prohibidas]
+### What to Avoid
+- [Undesired practices]
+- [Legacy code to avoid]
+- [Prohibited dependencies]
 
-### Ejemplos de Código
-[Ejemplos de cómo se escribe código en este proyecto]
+### Code Examples
+[Examples of how code is written in this project]
 
-## Historial de Cambios Recientes
-[Resumen de cambios recientes relevantes]
+## Recent Changes History
+[Summary of recent relevant changes]
 
-## Contacto y Recursos
-- Documentación: [links]
-- Repositorio: [url]
+## Contact and Resources
+- Documentation: [links]
+- Repository: [url]
 - Issues: [url]

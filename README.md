@@ -1,124 +1,124 @@
 # AI Task Orchestrator 🤖
 
-> **El Management autónomo para Agentes de IA.**
+> **Autonomous Management for AI Agents.**
 >
-> Define tareas en archivos markdown y deja que un equipo de agentes (ToolCalling) las implemente, testee en terminal, valide e incluso verifique la interfaz visualmente. Soporta OpenRouter y la API Zen (OpenCode).
+> Define tasks in markdown files and let a team of ToolCalling agents implement, test in terminal, validate, and even verify the UI visually. Supports OpenRouter and Zen API (OpenCode).
 >
-> **Filosofía:** Funciona como Git. Inicializa un directorio oculto `.ai-tasks` en tu proyecto y gestiona todo desde allí.
+> **Philosophy:** Works like Git. Initialize a hidden `.ai-tasks` directory in your project and manage everything from there.
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://python.org)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-## 🚀 Demo Rápida
+## 🚀 Quick Demo
 
 ```bash
-# 1. Instalar (solo una vez)
+# 1. Install (only once)
 git clone https://github.com/mcarbonell/ai-task-orchestrator.git
 cd ai-task-orchestrator
 pip install -r requirements.txt
-cp .env.example .env # Configura tus API keys
+cp .env.example .env # Configure your API keys
 
-# 2. Inicializar en TU proyecto (como git init)
-cd /ruta/a/tu/codigo
-python /ruta/a/orchestrator/cli.py init
+# 2. Initialize in YOUR project (like git init)
+cd /path/to/your/code
+python /path/to/orchestrator/cli.py init
 
-# 3. Ejecutar (la IA leerá project-context.md y las tareas en .ai-tasks/tasks)
-python /ruta/a/orchestrator/cli.py run
+# 3. Run (the AI will read project-context.md and tasks in .ai-tasks/tasks)
+python /path/to/orchestrator/cli.py run
 ```
 
-## ✨ ¿Qué es esto?
+## ✨ What is this?
 
-**AI Task Orchestrator** es un sistema que permite a las IAs trabajar de manera **completamente autónoma** en proyectos de desarrollo, manteniendo todo el contexto de las tareas dentro del propio repositorio del proyecto.
+**AI Task Orchestrator** is a system that allows AIs to work **completely autonomously** on development projects, keeping all task context within the project's own repository.
 
-### Flujo de Trabajo Estilo Git
+### Git-Style Workflow
 
-El orquestador busca automáticamente un directorio `.ai-tasks` subiendo por el árbol de carpetas. Esto permite ejecutarlo desde cualquier subdirectorio del proyecto.
+The orchestrator automatically searches for a `.ai-tasks` directory by traversing up the folder tree. This allows running it from any subdirectory of the project.
 
 ```
-Mi-Proyecto/
-├── .ai-tasks/             <-- Gestionado por el Orquestador
+My-Project/
+├── .ai-tasks/             <-- Managed by the Orchestrator
 │   ├── config.yaml
-│   ├── tasks/             <-- Tus tareas (.md)
+│   ├── tasks/             <-- Your tasks (.md)
 │   ├── logs/
 │   ├── reports/
 │   └── task-status.json
-├── project-context.md     <-- Contexto global para la IA (Editable)
+├── project-context.md     <-- Global context for the AI (Editable)
 ├── src/
 └── package.json
 ```
 
-## 📦 Instalación
+## 📦 Installation
 
-### Prerrequisitos
+### Prerequisites
 - **Python 3.10+**
-- **Chrome/Chromium** - Con debugging remoto habilitado (`--remote-debugging-port=9222`)
+- **Chrome/Chromium** - With remote debugging enabled (`--remote-debugging-port=9222`)
 
-### Configuración
-1. Clona el repo e instala dependencias.
-2. Configura el archivo `.env` en la raíz del orquestador con tu `ZEN_API_KEY` o `OPENROUTER_API_KEY`.
+### Configuration
+1. Clone the repo and install dependencies.
+2. Configure the `.env` file in the orchestrator root with your `ZEN_API_KEY` or `OPENROUTER_API_KEY`.
 
-## 🚀 Uso
+## 🚀 Usage
 
-### Inicializar Proyecto
-Dentro de la carpeta de tu código:
+### Initialize Project
+Inside your code folder:
 ```bash
 python path/to/cli.py init
 ```
-Esto creará el directorio `.ai-tasks` y un archivo `project-context.md` en la raíz de tu proyecto.
+This will create the `.ai-tasks` directory and a `project-context.md` file in your project root.
 
-### Gestión de Tareas
-Las tareas se guardan en `.ai-tasks/tasks/`. Puedes crearlas manualmente o usando:
+### Task Management
+Tasks are stored in `.ai-tasks/tasks/`. You can create them manually or using:
 ```bash
-python path/to/cli.py create-task "Implementar Header"
+python path/to/cli.py create-task "Implement Header"
 ```
 
-### Ejecución y Estado
+### Running and Status
 ```bash
-# Ver qué hay que hacer
+# See what needs to be done
 python path/to/cli.py status
 
-# Lanzar el agente de IA
+# Launch the AI agent
 python path/to/cli.py run
 
-# Si una tarea falla, corregir y reintentar
+# If a task fails, fix and retry
 python path/to/cli.py retry
 ```
 
-## 🔧 Configuración por Proyecto
+## 🔧 Per-Project Configuration
 
-Cada proyecto tiene su propio `config.yaml` dentro de `.ai-tasks/`. Puedes ajustar el modelo de IA, los reintentos o los umbrales de performance específicamente para ese repo.
+Each project has its own `config.yaml` inside `.ai-tasks/`. You can adjust the AI model, retries, or performance thresholds specifically for that repo.
 
 ```yaml
 opencode:
-  model: minimax-m2.5-free # Modelo recomendado para Zen API
+  model: minimax-m2.5-free # Recommended model for Zen API
   provider: zen
 ```
 
-## 🏗️ Arquitectura V2
+## 🏗️ V2 Architecture
 
-- **Auto-Discovery:** Busca la raíz del proyecto `.ai-tasks` hacia arriba.
-- **ToolCallingAgent:** Loop de agencia 100% nativo vía API.
-- **CDP Integration:** Validación real en navegador.
-- **Portable:** Todo el estado del orquestador vive en el repo, permitiendo compartir tareas entre el equipo.
+- **Auto-Discovery:** Searches for the `.ai-tasks` project root by going up.
+- **ToolCallingAgent:** 100% native API-based agency loop.
+- **CDP Integration:** Real browser validation.
+- **Portable:** All orchestrator state lives in the repo, enabling task sharing across the team.
 
-## 📝 Formato de Tareas (.md)
+## 📝 Task Format (.md)
 ```markdown
 ---
 id: T-001
-title: "Título"
+title: "Title"
 status: pending
 priority: high
 dependencies: []
 ---
-## Descripción
+## Description
 ...
-## Criterios de Aceptación
+## Acceptance Criteria
 - [ ] ...
-## Tests Unitarios
+## Unit Tests
 ```bash
 npm test
 \```
 ```
 
 ---
-**¿Listo para delegar desarrollo real en IA?** 🚀
+**Ready to delegate real development to AI?** 🚀

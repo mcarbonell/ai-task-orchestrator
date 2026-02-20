@@ -62,29 +62,14 @@ def init(ctx, path):
         dir_path.mkdir(parents=True)
         click.echo(f"  📁 {dir_path.relative_to(base_path)}")
     
-    # Copiar/Crear config.yaml
-    config_content = """# AI Task Orchestrator Configuration
-orchestrator:
-  max_retries: 3
-  parallel_workers: 1
-  log_level: INFO
-  max_iterations: 15
-
-opencode:
-  model: kimi-k2.5-free
-  provider: zen # openrouter | zen | opencode
-  
-directories:
-  tasks: ./tasks
-  screenshots: ./screenshots
-  reports: ./reports
-  logs: ./logs
-
-files:
-  status: ./task-status.json
-  context: ../project-context.md
-"""
-    (project_dir / "config.yaml").write_text(config_content, encoding="utf-8")
+    # Copiar config por defecto
+    default_config = Path(__file__).parent / "default-config.yaml"
+    if default_config.exists():
+        import shutil
+        shutil.copy(default_config, project_dir / "config.yaml")
+    else:
+        click.echo(f"⚠️  No se encontró default-config.yaml")
+        return
     click.echo(f"  ⚙️  .ai-tasks/config.yaml")
     
     # Crear project-context.md en la raíz del proyecto (visible)

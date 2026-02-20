@@ -1,71 +1,71 @@
 # Contributing to AI Task Orchestrator
 
-¡Gracias por tu interés en contribuir! 🎉
+Thank you for your interest in contributing! 🎉
 
-## Cómo Contribuir
+## How to Contribute
 
-### Reportar Bugs
+### Reporting Bugs
 
-1. Verifica que el bug no esté ya reportado
-2. Abre un [Issue](https://github.com/mcarbonell/ai-task-orchestrator/issues) con:
-   - Descripción clara del problema
-   - Pasos para reproducir
-   - Comportamiento esperado vs actual
-   - Logs si aplica
+1. Check if the bug is already reported
+2. Open an [Issue](https://github.com/mcarbonell/ai-task-orchestrator/issues) with:
+   - Clear description of the problem
+   - Steps to reproduce
+   - Expected vs actual behavior
+   - Logs if applicable
 
-### Sugerir Features
+### Suggesting Features
 
-1. Abre un Issue con label `enhancement`
-2. Describe el feature y su caso de uso
-3. Explica por qué sería útil
+1. Open an Issue with label `enhancement`
+2. Describe the feature and its use case
+3. Explain why it would be useful
 
 ### Pull Requests
 
-1. **Fork** el repositorio
-2. **Branch:** `git checkout -b feature/nombre-feature`
+1. **Fork** the repository
+2. **Branch:** `git checkout -b feature/feature-name`
 3. **Commit:** `git commit -m 'Add feature'`
-4. **Push:** `git push origin feature/nombre-feature`
-5. **PR:** Abre Pull Request con descripción clara
+4. **Push:** `git push origin feature/feature-name`
+5. **PR:** Open Pull Request with clear description
 
-## Guías de Código
+## Code Guidelines
 
 ### Python
 - PEP 8
-- Type hints donde sea posible
-- Docstrings para funciones públicas
-- Tests para nueva funcionalidad
+- Type hints where possible
+- Docstrings for public functions
+- Tests for new functionality
 
 ### Commits
-- Mensajes claros y descriptivos
-- Usa imperativo: "Add feature" no "Added feature"
+- Clear and descriptive messages
+- Use imperative: "Add feature" not "Added feature"
 
-## Desarrollo Local
+## Local Development
 
 ```bash
 # Setup
 pip install -r requirements.txt
 
-# Ejecutar tests
+# Run tests
 pytest
 
-# Verificar estilo
+# Check style
 flake8 task_runner/
 
 # Type checking
 mypy task_runner/
 ```
 
-## Áreas de Contribución
+## Contribution Areas
 
-- [ ] Mejorar documentación
-- [ ] Añadir más templates de tareas
-- [ ] Soportar más modelos de IA
-- [ ] Integraciones CI/CD
-- [ ] Tests unitarios
-- [ ] Mejorar manejo de errores
+- [ ] Improve documentation
+- [ ] Add more task templates
+- [ ] Support more AI models
+- [ ] CI/CD integrations
+- [ ] Unit tests
+- [ ] Improve error handling
 
-## Preguntas?
+## Questions?
 
-Únete a las [Discusiones](https://github.com/mcarbonell/ai-task-orchestrator/discussions) o abre un Issue.
+Join the [Discussions](https://github.com/mcarbonell/ai-task-orchestrator/discussions) or open an Issue.
 
-¡Gracias! 🙏
+Thank you! 🙏

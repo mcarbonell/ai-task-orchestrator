@@ -1,31 +1,31 @@
 ---
 id: T-XXX
-title: "Título de la tarea"
+title: "Task Title"
 status: pending
 priority: medium
 dependencies: []
 estimated_time: "2h"
 ---
 
-## Descripción
-Describe aquí la funcionalidad a implementar. Sé específico sobre qué se espera lograr.
+## Description
+Describe the functionality to be implemented here. Be specific about what is expected to be achieved.
 
-## Criterios de Aceptación
-- [ ] [Criterio específico y medible 1]
-- [ ] [Criterio específico y medible 2]
-- [ ] [Criterio específico y medible 3]
+## Acceptance Criteria
+- [ ] [Specific and measurable criterion 1]
+- [ ] [Specific and measurable criterion 2]
+- [ ] [Specific and measurable criterion 3]
 
-## Tests Unitarios
+## Unit Tests
 ```bash
-# Comando para ejecutar tests específicos de esta tarea
-npm test src/components/MiComponente.test.tsx
+# Command to run specific tests for this task
+npm test src/components/MyComponent.test.tsx
 ```
 
-## Tests E2E (CDP)
+## E2E Tests (CDP)
 ```yaml
 steps:
   - action: navigate
-    url: http://localhost:3000/ruta-de-prueba
+    url: http://localhost:3000/test-route
   
   - action: screenshot
     filename: step-1-initial.png
@@ -34,9 +34,9 @@ steps:
   
   - action: eval
     code: |
-      // Interacción con la página
-      document.querySelector('#input-campo').value = 'test';
-      document.querySelector('#boton-submit').click();
+      // Interact with the page
+      document.querySelector('#input-field').value = 'test';
+      document.querySelector('#submit-button').click();
   
   - action: wait
     milliseconds: 1000
@@ -46,7 +46,7 @@ steps:
   
   - action: eval
     code: window.location.pathname
-    expect: /ruta-esperada
+    expect: /expected-route
 
 console_checks:
   - no_errors: true
@@ -60,14 +60,14 @@ performance_thresholds:
 ```
 
 ## Definition of Done
-- [ ] Todos los criterios de aceptación cumplidos
-- [ ] Tests unitarios pasan (coverage > 80%)
-- [ ] Screenshots generados y validados visualmente
-- [ ] Console del navegador sin errores
-- [ ] Métricas de performance dentro de umbrales
-- [ ] Código sigue convenciones del proyecto
+- [ ] All acceptance criteria met
+- [ ] Unit tests pass (coverage > 80%)
+- [ ] Screenshots generated and visually validated
+- [ ] Browser console free of errors
+- [ ] Performance metrics within thresholds
+- [ ] Code follows project conventions
 
-## Notas Adicionales
-- [Información adicional relevante]
-- [Links a documentación]
-- [Consideraciones especiales]
+## Additional Notes
+- [Relevant additional information]
+- [Documentation links]
+- [Special considerations]

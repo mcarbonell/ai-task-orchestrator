@@ -27,10 +27,12 @@ class ToolCallingAgent:
         provider: str = "zen",  # "zen" o "openrouter"
         base_url: Optional[str] = None,
         api_key: Optional[str] = None,
-        max_iterations: int = 15
+        max_iterations: int = 15,
+        tasks_dir: str = "tasks"
     ):
         self.model = model
         self.max_iterations = max_iterations
+        self.tasks_dir = tasks_dir
         
         # Configurar URLs por defecto según el proveedor
         if provider == "zen":
@@ -213,9 +215,9 @@ class ToolCallingAgent:
                 title = args.get("title")
                 desc = args.get("description")
                 task_id = f"T-AUTO-{int(datetime.now().timestamp())}"
-                filename = f"tasks/{task_id}.md"
+                filename = f"{self.tasks_dir}/{task_id}.md"
                 
-                os.makedirs("tasks", exist_ok=True)
+                os.makedirs(self.tasks_dir, exist_ok=True)
                 content = f"---\nid: {task_id}\ntitle: \"{title}\"\nstatus: pending\npriority: high\ndependencies: []\n---\n\n## Descripción\n{desc}\n"
                 
                 with open(filename, "w", encoding="utf-8") as f:

@@ -1,116 +1,117 @@
 # AI Task Orchestrator - Architecture
 
-## Visión General
+## Overview
 
-El AI Task Orchestrator es un sistema diseñado para automatizar completamente el desarrollo de software mediante agentes de IA. Utiliza un enfoque de orquestación de tareas donde cada tarea es una unidad atómica de trabajo que puede ser ejecutada, validada y completada de forma autónoma.
+The AI Task Orchestrator is a system designed to fully automate software development using AI agents. It uses a task orchestration approach where each task is an atomic unit of work that can be executed, validated, and completed autonomously.
 
-## Principios de Diseño
+## Design Principles
 
-1. **Autonomía**: El sistema debe operar sin intervención humana durante la ejecución de tareas
-2. **Atomicidad**: Las tareas son independientes y completas por sí mismas
-3. **Validación Automática**: Cada tarea incluye sus propios criterios de validación
-4. **Reintentos Inteligentes**: Si una tarea falla, se reintenta con feedback del error
-5. **Observabilidad**: Todo el proceso está trazado y reportado
+1. **Autonomy**: The system must operate without human intervention during task execution
+2. **Atomicity**: Tasks are independent and complete in themselves
+3. **Automatic Validation**: Each task includes its own validation criteria
+4. **Intelligent Retries**: If a task fails, it's retried with error feedback
+5. **Observability**: The entire process is traced and reported
 
-## Arquitectura de Componentes
+## Component Architecture
 
-### 1. Task Engine (Orquestador)
+### 1. Task Engine (Orchestrator)
 
-El núcleo del sistema. Responsable de:
-- Gestionar el estado de las tareas (máquina de estados)
-- Coordinar la ejecución secuencial o paralela
-- Manejar dependencias entre tareas
-- Gestionar reintentos con backoff
-- Generar reportes consolidados
+The core of the system. Responsible for:
+- Managing task state (state machine)
+- Coordinating sequential or parallel execution
+- Handling dependencies between tasks
+- Managing retries with backoff
+- Generating consolidated reports
 
-**Flujo de Ejecución:**
+**Execution Flow:**
 ```
 Load Tasks → Check Dependencies → Execute Task → Validate → 
-   ↓
+    ↓
 Completed / Retry / Failed
 ```
 
 ### 2. Task Parser
 
-Convierte archivos markdown en objetos de dominio:
-- Extrae metadatos YAML (frontmatter)
-- Parsea criterios de aceptación
-- Extrae comandos de tests
-- Parsea configuración de CDP (navegación, screenshots, eval)
+Converts markdown files into domain objects:
+- Extracts YAML metadata (frontmatter)
+- Parses acceptance criteria
+- Extracts test commands
+- Parses CDP configuration (navigation, screenshots, eval)
 
-**Formato de Tarea:**
+**Task Format:**
 ```yaml
 ---
 id: T-001
-title: "Nombre"
+title: "Name"
 status: pending
 priority: high
 dependencies: [T-002]
 ---
 ```
 
-### 3. OpenCode Runner
+### 3. Tool Calling Agent
 
-Wrapper sobre el CLI de OpenCode:
-- Construye prompts enriquecidos con contexto
-- Ejecuta `opencode run` con flags apropiados
-- Captura output y errores
-- Soporte para validación visual (envío de screenshots)
+100% native API-based agent:
+- Builds enriched prompts with context
+- Makes tool_calls to the API
+- Captures output and errors
+- Support for visual validation (sending screenshots)
 
-**Integración:**
-```bash
-opencode run \
-  --model anthropic/claude-3.5-sonnet \
-  --agent build \
-  --file screenshot.png \
-  "Implementa esta funcionalidad..."
+**Integration:**
+```python
+client.chat.completions.create(
+    model="minimax-m2.5-free",
+    tools=[...],
+    messages=[...]
+)
 ```
 
 ### 4. CDP Wrapper
 
-Integración con Chrome DevTools Protocol:
-- Abstrae comandos del cdp_controller.py
-- Gestiona conexión WebSocket
-- Métodos: navigate, screenshot, evaluate, click
-- Recolecta métricas de performance
+Chrome DevTools Protocol integration:
+- Abstracts commands from cdp_controller.py
+- Manages WebSocket connection
+- Methods: navigate, screenshot, evaluate, click
+- Collects performance metrics
 
 ### 5. Visual Validator
 
-Usa IA con capacidad de visión para validar UI:
-- Envía screenshots a OpenCode
-- Analiza elementos visuales
-- Detecta errores de layout
-- Verifica responsive design
+Uses AI with vision capability to validate UI:
+- Sends screenshots to OpenCode
+- Analyzes visual elements
+- Detects layout errors
+- Verifies responsive design
 
 ### 6. Report Generator
 
-Genera artefactos de ejecución:
-- JSON: Datos estructurados
-- HTML: Dashboard visual
-- Markdown: Documentación
+Generates execution artifacts:
+- JSON: Structured data
+- HTML: Visual dashboard
+- Markdown: Documentation
 
-## Flujo de Datos
+## Data Flow
 
 ```
 ┌─────────────┐     ┌──────────────┐     ┌──────────────┐
 │ Task Files  │────→│ Task Parser  │────→│ Task Engine  │
 │  (.md)      │     │              │     │              │
 └─────────────┘     └──────────────┘     └──────┬───────┘
-                                                │
-                    ┌───────────────────────────┼───────────┐
-                    ▼                           ▼           ▼
-            ┌──────────────┐          ┌──────────────┐  ┌──────────────┐
-            │OpenCode Runner│          │ CDP Wrapper  │  │   Validator  │
-            └──────┬───────┘          └──────┬───────┘  └──────┬───────┘
-                   │                         │                 │
-                   ▼                         ▼                 ▼
-            ┌──────────────┐          ┌──────────────┐  ┌──────────────┐
-            │   AI Agent   │          │    Chrome    │  │  Visual AI   │
-            │  (OpenCode)  │          │   (CDP)      │  │   Analysis   │
-            └──────────────┘          └──────────────┘  └──────────────┘
+                                                 │
+                     ┌───────────────────────────┼───────────┐
+                     ▼                           ▼           ▼
+             ┌──────────────┐          ┌──────────────┐  ┌──────────────┐
+             │Tool Calling  │          │ CDP Wrapper  │  │   Validator  │
+             │   Agent     │          └──────┬───────┘  └──────┬───────┘
+             └──────┬───────┘                 │                 │
+                    │                         ▼                 ▼
+                    ▼                 ┌──────────────┐  ┌──────────────┐
+             ┌──────────────┐        │    Chrome    │  │  Visual AI   │
+             │   AI Agent   │        │    (CDP)     │  │   Analysis   │
+             │  (OpenCode)  │        └──────────────┘  └──────────────┘
+             └──────────────┘
 ```
 
-## Estados de Tareas
+## Task States
 
 ```
     ┌────────────┐
@@ -134,38 +135,38 @@ Genera artefactos de ejecución:
 └───────┘
 ```
 
-## Patrones de Diseño
+## Design Patterns
 
 ### 1. Command Pattern
-Cada operación (navigate, screenshot, eval) es un comando con parámetros.
+Each operation (navigate, screenshot, eval) is a command with parameters.
 
 ### 2. Strategy Pattern
-Diferentes estrategias de validación: unit tests, E2E, visual.
+Different validation strategies: unit tests, E2E, visual.
 
 ### 3. Template Method
-Ejecución de tarea sigue un flujo definido pero extensible.
+Task execution follows a defined but extensible flow.
 
 ### 4. Observer Pattern
-Logging y reportes observan eventos del engine.
+Logging and reports observe engine events.
 
-## Consideraciones de Escalabilidad
+## Scalability Considerations
 
-- **Paralelización**: Tareas independientes pueden ejecutarse en paralelo
-- **Estado Externo**: Estado guardado en archivos (no en memoria)
-- **Idempotencia**: Re-ejecutar una tarea produce el mismo resultado
-- **Recuperación**: Si falla el proceso, se puede reanudar desde el estado guardado
+- **Parallelization**: Independent tasks can run in parallel
+- **External State**: State saved to files (not in memory)
+- **Idempotency**: Re-running a task produces the same result
+- **Recovery**: If the process fails, it can resume from saved state
 
-## Seguridad
+## Security
 
-- No se almacenan secrets en archivos de tareas
-- Variables de entorno para configuración sensible
-- Sandbox de CDP (Chrome aislado)
-- Límites de tiempo en ejecuciones
+- No secrets stored in task files
+- Environment variables for sensitive configuration
+- CDP sandbox (isolated Chrome)
+- Time limits on executions
 
-## Extensiones Futuras
+## Future Extensions
 
-1. **Plugin System**: Permitir plugins personalizados para validaciones
-2. **Multi-Agent**: Diferentes agentes para diferentes tipos de tareas
-3. **Auto-Planning**: IA genera tareas a partir de requerimientos
-4. **Git Integration**: Auto-commit al completar tareas
+1. **Plugin System**: Allow custom plugins for validations
+2. **Multi-Agent**: Different agents for different task types
+3. **Auto-Planning**: AI generates tasks from requirements
+4. **Git Integration**: Auto-commit when completing tasks
 5. **CI/CD Integration**: GitHub Actions, GitLab CI, etc.

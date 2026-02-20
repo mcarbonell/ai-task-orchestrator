@@ -36,8 +36,8 @@ def load_config(config_path: Optional[str] = None) -> Dict:
         if project_root:
             config_path = project_root / ".ai-tasks" / "config.yaml"
         else:
-            # Búsqueda fallback
             search_paths = [
+                Path("default-config.yaml"),
                 Path("config.yaml"),
                 Path("orchestrator-config.yaml"),
                 Path(".ai-tasks/config.yaml"),
@@ -95,7 +95,8 @@ def get_default_config() -> Dict:
             "log_level": "INFO"
         },
         "opencode": {
-            "model": "anthropic/claude-3.5-sonnet",
+            "model": "minimax-m2.5-free",
+            "provider": "zen",
             "agent": "build",
             "timeout": 300
         },
