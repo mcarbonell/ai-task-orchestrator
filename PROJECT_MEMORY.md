@@ -215,7 +215,7 @@ directories:
 
 ## 📊 Estado de Desarrollo
 
-### ✅ Completado (MVP v1.0)
+### ✅ Completado (MVP v2.0)
 
 - [x] Task Engine con orquestación completa
 - [x] Task Parser para archivos markdown
@@ -232,8 +232,6 @@ directories:
 
 ### 🔄 Pendiente (Roadmap)
 
-- [ ] Resolver sesión de OpenCode automáticamente
-- [ ] SDK de OpenCode para ejecución 100% automática
 - [ ] Visual regression testing
 - [ ] Watch mode
 - [ ] Multi-agent support
@@ -243,35 +241,7 @@ directories:
 
 ---
 
-## 🐛 Issues Conocidos (¡ACTUALIZADO 2026-02-18!)
-
-### 1. **Terminal Incompatible - CRÍTICO** ✅ RESUELTO
-
-**Problema:** OpenCode falla con "Session not found" o "Unauthorized" en MINGW64/Git Bash
-
-**Descubrimiento:** OpenCode funciona perfectamente en PowerShell/CMD, solo falla en MINGW64
-
-**Solución:** 
-```powershell
-# ✓ Usar Windows PowerShell (recomendado)
-PS> opencode -m opencode/kimi-k2.5 run "Hola"
-
-# ✓ O Windows CMD
-C:\> opencode -m opencode/kimi-k2.5 run "Hola"
-
-# ✗ NO usar MINGW64/Git Bash
-$ opencode run "Hola"  # Error: Session not found
-```
-
-**Impacto:** Todo el sistema debe ejecutarse en PowerShell/CMD, no en Git Bash.
-
-### 2. **Unicode en Windows**
-Errores de encoding con emojis (no crítico, solo visual)
-- Workaround: Usar PowerShell
-- Los errores no afectan el funcionamiento
-
-### 3. **Resuelto: OpenCode Session**
-Ya NO requiere inicialización manual en PowerShell/CMD. El error "Session not found" era por usar el terminal equivocado.
+## 🐛 Issues Conocidos 
 
 ---
 

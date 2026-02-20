@@ -29,15 +29,43 @@ class TaskEngine:
         # Asegurar directorios existen
         self.log_dir.mkdir(parents=True, exist_ok=True)
         
+        import sys
+        
+        class SafeStreamHandler(logging.StreamHandler):
+            def emit(self, record):
+                try:
+                    msg = self.format(record)
+                    self.stream.write(msg + self.terminator)
+                    self.flush()
+                except UnicodeEncodeError:
+                    # En consolas legacy de Windows, reemplazamos emojis por ?
+                    safe_msg = msg.encode('ascii', 'replace').decode('ascii')
+                    try:
+                        self.stream.write(safe_msg + self.terminator)
+                        self.flush()
+                    except Exception:
+                        pass
+                except Exception:
+                    self.handleError(record)
+
         # Setup logging
-        logging.basicConfig(
-            level=getattr(logging, config.get("orchestrator", {}).get("log_level", "INFO")),
-            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-            handlers=[
-                logging.FileHandler(self.log_dir / "orchestrator.log"),
-                logging.StreamHandler()
-            ]
-        )
+        root_logger = logging.getLogger()
+        root_logger.setLevel(getattr(logging, config.get("orchestrator", {}).get("log_level", "INFO")))
+        
+        # Limpiar handlers previos para no duplicar
+        for h in root_logger.handlers[:]:
+            root_logger.removeHandler(h)
+            
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        
+        file_handler = logging.FileHandler(self.log_dir / "orchestrator.log", encoding='utf-8')
+        file_handler.setFormatter(formatter)
+        
+        stream_handler = SafeStreamHandler(sys.stdout)
+        stream_handler.setFormatter(formatter)
+        
+        root_logger.addHandler(file_handler)
+        root_logger.addHandler(stream_handler)
         self.logger = logging.getLogger("TaskEngine")
         
         # Inicializar componentes
