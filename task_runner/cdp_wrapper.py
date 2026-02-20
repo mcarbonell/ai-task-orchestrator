@@ -32,6 +32,7 @@ class CDPWrapper:
         search_paths = [
             Path("cdp_controller.py"),
             Path("../cdp_controller.py"),
+            Path("../cdp_controller/src/cdp_controller.py"),
             Path("../../cdp_controller.py"),
             Path.home() / "cdp_controller.py",
         ]
