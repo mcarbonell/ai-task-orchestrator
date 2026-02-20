@@ -8,35 +8,82 @@ from pathlib import Path
 from typing import Dict, Optional
 
 
+def find_project_root(start_path: Optional[Path] = None) -> Optional[Path]:
+    """
+    Busca el directorio raíz del proyecto (.ai-tasks) subiendo por el árbol de directorios.
+    """
+    curr = Path(start_path or Path.cwd()).absolute()
+    
+    # Límite de seguridad para no subir hasta la raíz del sistema infinitamente
+    for _ in range(20):
+        if (curr / ".ai-tasks").is_dir():
+            return curr
+        if curr.parent == curr:
+            break
+        curr = curr.parent
+        
+    return None
+
+
 def load_config(config_path: Optional[str] = None) -> Dict:
     """
-    Carga configuración desde archivo YAML
-    
-    Args:
-        config_path: Ruta al archivo de config. Si es None, busca config.yaml
-    
-    Returns:
-        Dict con configuración
+    Carga configuración desde archivo YAML.
+    Si no se pasa config_path, intenta auto-descubrir el proyecto .ai-tasks
     """
+    project_root = find_project_root()
+    
     if config_path is None:
-        # Buscar en ubicaciones comunes
-        search_paths = [
-            Path("config.yaml"),
-            Path("orchestrator-config.yaml"),
-            Path.home() / ".config" / "ai-task-orchestrator" / "config.yaml",
-        ]
-        
-        for path in search_paths:
-            if path.exists():
-                config_path = path
-                break
+        if project_root:
+            config_path = project_root / ".ai-tasks" / "config.yaml"
+        else:
+            # Búsqueda fallback
+            search_paths = [
+                Path("config.yaml"),
+                Path("orchestrator-config.yaml"),
+                Path(".ai-tasks/config.yaml"),
+            ]
+            for path in search_paths:
+                if path.exists():
+                    config_path = path
+                    break
     
     if not config_path or not Path(config_path).exists():
-        logging.warning("No se encontró archivo de configuración. Usando defaults.")
-        return get_default_config()
+        # Si no hay config, pero hay proyecto, intentar usar defaults con rutas al proyecto
+        defaults = get_default_config()
+        if project_root:
+            base = project_root / ".ai-tasks"
+            defaults['directories'] = {
+                "tasks": str(base / "tasks"),
+                "screenshots": str(base / "screenshots"),
+                "reports": str(base / "reports"),
+                "logs": str(base / "logs")
+            }
+            defaults['files'] = {
+                "status": str(base / "task-status.json"),
+                "context": str(project_root / "project-context.md")
+            }
+        return defaults
     
-    with open(config_path, 'r', encoding='utf-8') as f:
-        return yaml.safe_load(f)
+    config_file = Path(config_path).absolute()
+    base_dir = config_file.parent
+    
+    with open(config_file, 'r', encoding='utf-8') as f:
+        config = yaml.safe_load(f)
+    
+    # Resolver rutas relativas basadas en la ubicación del archivo de configuración
+    if 'directories' in config:
+        for key, value in config['directories'].items():
+            path = Path(value)
+            if not path.is_absolute():
+                config['directories'][key] = str((base_dir / path).resolve())
+                
+    if 'files' in config:
+        for key, value in config['files'].items():
+            path = Path(value)
+            if not path.is_absolute():
+                config['files'][key] = str((base_dir / path).resolve())
+    
+    return config
 
 
 def get_default_config() -> Dict:

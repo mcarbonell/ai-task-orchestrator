@@ -27,7 +27,7 @@ MODEL_CONFIGS = {
     "glm-4.7": "chat",
     "glm-4.7-free": "chat",
     "glm-4.6": "chat",
-    "minimax-m2.1": "chat",    
+    "minimax-m2.5": "chat",    
     "qwen3-coder": "chat",
     "big-pickle": "chat",
     # Responses API (/v1/responses)
@@ -140,7 +140,7 @@ def chat(prompt, model):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Test OpenCode Zen API")
     parser.add_argument("--models", action="store_true", help="Listar modelos disponibles")
-    parser.add_argument("--model", default="kimi-k2.5-free", help="Modelo a usar")
+    parser.add_argument("--model", default="minimax-m2.5-free", help="Modelo a usar")
     parser.add_argument("prompt", nargs="?", help="Prompt para enviar al modelo")
     
     args = parser.parse_args()

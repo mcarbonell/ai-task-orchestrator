@@ -33,43 +33,61 @@ def cli(ctx, config, verbose):
     log_level = "DEBUG" if verbose else cfg.get('orchestrator', {}).get('log_level', 'INFO')
     setup_logging(log_dir, log_level)
     
-    # Asegurar directorios
-    ensure_directories(cfg)
+    # ensure_directories(cfg)  # Eliminado de aquí para evitar creación de carpetas por defecto
 
 
 @cli.command()
-@click.argument('project_name')
+@click.option('--path', '-p', default='.', help='Directorio donde inicializar (por defecto el actual)')
 @click.pass_context
-def init(ctx, project_name):
-    """Inicializa un nuevo proyecto con estructura de ejemplo"""
-    project_path = Path(project_name)
+def init(ctx, path):
+    """Inicializa un nuevo proyecto en el directorio (estilo git init)"""
+    base_path = Path(path).absolute()
+    project_dir = base_path / ".ai-tasks"
     
-    if project_path.exists():
-        click.echo(f"Error: El directorio {project_name} ya existe")
+    if project_dir.exists():
+        click.echo(f"⚠️  Ya existe un proyecto en {base_path}")
         return
     
-    click.echo(f"🚀 Inicializando proyecto: {project_name}")
+    click.echo(f"🚀 Inicializando AI Task Orchestrator en: {base_path}")
     
-    # Crear estructura
+    # Crear estructura oculta
     dirs = [
-        project_path / "tasks",
-        project_path / "screenshots",
-        project_path / "reports",
-        project_path / "logs",
+        project_dir / "tasks",
+        project_dir / "screenshots",
+        project_dir / "reports",
+        project_dir / "logs",
     ]
     
     for dir_path in dirs:
         dir_path.mkdir(parents=True)
-        click.echo(f"  📁 {dir_path}")
+        click.echo(f"  📁 {dir_path.relative_to(base_path)}")
     
-    # Copiar config.yaml
-    config_template = Path(__file__).parent / "config.yaml"
-    if config_template.exists():
-        import shutil
-        shutil.copy(config_template, project_path / "orchestrator-config.yaml")
-        click.echo(f"  ⚙️  orchestrator-config.yaml")
+    # Copiar/Crear config.yaml
+    config_content = """# AI Task Orchestrator Configuration
+orchestrator:
+  max_retries: 3
+  parallel_workers: 1
+  log_level: INFO
+  max_iterations: 15
+
+opencode:
+  model: kimi-k2.5-free
+  provider: zen # openrouter | zen | opencode
+  
+directories:
+  tasks: ./tasks
+  screenshots: ./screenshots
+  reports: ./reports
+  logs: ./logs
+
+files:
+  status: ./task-status.json
+  context: ../project-context.md
+"""
+    (project_dir / "config.yaml").write_text(config_content, encoding="utf-8")
+    click.echo(f"  ⚙️  .ai-tasks/config.yaml")
     
-    # Crear project-context.md de ejemplo
+    # Crear project-context.md en la raíz del proyecto (visible)
     context_content = """# Project Context
 
 ## Descripción
@@ -78,61 +96,41 @@ def init(ctx, project_name):
 ## Stack Tecnológico
 - Frontend: [React/Vue/Angular/etc.]
 - Backend: [Node/Python/etc.]
-- Base de datos: [PostgreSQL/Mongo/etc.]
 
 ## Convenciones
-- [Especifica convenciones de código]
-- [Estilo de commits]
-- [Estructura de carpetas]
-
-## Dependencias
-[Lista de dependencias principales]
-
-## Notas Importantes
-[Contexto adicional relevante para las IAs]
+- Estilo de código: [Standard/Airbnb/etc.]
+- Commits: [Conventional Commits/etc.]
 """
     
-    (project_path / "project-context.md").write_text(context_content, encoding="utf-8")
-    click.echo(f"  📝 project-context.md")
+    context_file = base_path / "project-context.md"
+    if not context_file.exists():
+        context_file.write_text(context_content, encoding="utf-8")
+        click.echo(f"  📝 project-context.md")
     
     # Crear tarea de ejemplo
     example_task = '''---
 id: T-001
-title: "Configurar estructura inicial del proyecto"
+title: "Configuración inicial"
 status: pending
 priority: high
 dependencies: []
-estimated_time: "1h"
 ---
 
 ## Descripción
-Configurar la estructura base del proyecto según las convenciones definidas.
+Verificar que el orquestador está correctamente configurado.
 
 ## Criterios de Aceptación
-- [ ] Estructura de carpetas creada
-- [ ] Archivos de configuración inicializados
-- [ ] Dependencias instaladas
-- [ ] Script de desarrollo funcional
-
-## Tests Unitarios
-```bash
-npm test
-```
-
-## Definition of Done
-- [ ] Tests pasan
-- [ ] Estructura válida
+- [ ] El sistema puede leer este archivo
+- [ ] El agente puede ejecutar comandos básicos
 '''
     
-    (project_path / "tasks" / "T-001-setup.md").write_text(example_task, encoding="utf-8")
-    click.echo(f"  ✅ T-001-setup.md (ejemplo)")
+    (project_dir / "tasks" / "T-001.md").write_text(example_task, encoding="utf-8")
+    click.echo(f"  ✅ .ai-tasks/tasks/T-001.md (ejemplo)")
     
-    click.echo(f"\n✨ Proyecto {project_name} creado exitosamente!")
+    click.echo(f"\n✨ Proyecto inicializado exitosamente!")
     click.echo(f"\nPróximos pasos:")
-    click.echo(f"  cd {project_name}")
-    click.echo(f"  # Edita project-context.md con contexto de tu proyecto")
-    click.echo(f"  # Crea más tareas en tasks/")
-    click.echo(f"  # Ejecuta: python cli.py run")
+    click.echo(f"  # Edita project-context.md")
+    click.echo(f"  # Ejecuta: python run.py run")
 
 
 @cli.command()
@@ -146,6 +144,10 @@ def run(ctx, task, parallel, dry_run):
     
     if dry_run:
         click.echo("🔍 MODO DRY-RUN - No se ejecutarán cambios\n")
+    
+    # Asegurar directorios antes de correr
+    from task_runner.utils import ensure_directories
+    ensure_directories(config)
     
     engine = TaskEngine(config)
     

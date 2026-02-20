@@ -5,7 +5,7 @@ orchestrator:
   log_dir: ./logs
   
 opencode:
-  model: kimi-k2.5-free
+  model: minimax-m2.5-free
   provider: zen
   agent: build
   timeout: 300
@@ -29,7 +29,7 @@ validation:
       - "DevTools"
   visual:
     enabled: true
-    model: kimi-k2.5-free
+    model: minimax-m2.5-free
     timeout: 60
 
 directories:

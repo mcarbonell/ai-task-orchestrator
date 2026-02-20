@@ -5,46 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orquestador V2</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         body {
             background-color: #1e1e1e;
-            color: #f0f0f0;
+            color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
+            height: 100vh;
+            margin: 0;
         }
         
         h1 {
             font-size: 2.5rem;
             margin-bottom: 2rem;
-            text-align: center;
-            color: #ffffff;
         }
         
         button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #4CAF50;
             color: white;
             border: none;
-            padding: 15px 40px;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
             font-size: 1.2rem;
-            border-radius: 30px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
         
         button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+        
+        button:active {
+            transform: scale(0.98);
         }
     </style>
 </head>
