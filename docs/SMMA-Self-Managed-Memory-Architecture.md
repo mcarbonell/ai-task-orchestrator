@@ -1,4 +1,4 @@
-# Arquitectura SMMA: Self-Managed Mnemonic Architecture
+# Arquitectura SMMA: Self-Managed Memory Architecture
 **Versión:** 1.0  
 **Objetivo:** Permitir que un Agente de IA gestione proactivamente su ventana de contexto, memoria a largo plazo y precisión histórica mediante herramientas de auto-edición.
 
@@ -7,7 +7,7 @@
 ## 1. Componentes del Sistema
 
 ### A. El Núcleo Agéntico (LLM)
-El motor de razonamiento. Debe ser un modelo con alta capacidad de seguimiento de instrucciones (Gemini 1.5 Pro, GPT-4o, Claude 3.5 Sonnet) que reciba metadatos constantes sobre su estado interno.
+El motor de razonamiento. Debe ser un modelo con alta capacidad de seguimiento de instrucciones (Gemini 3.0 Pro, GPT-5, Claude 4.6 Sonnet) que reciba metadatos constantes sobre su estado interno.
 
 ### B. Memoria de Trabajo (Contexto Activo)
 Es el "presente" de la IA. No es estático; es una lista de objetos de mensaje que la IA puede modificar.

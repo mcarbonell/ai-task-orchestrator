@@ -394,12 +394,20 @@ class ToolCallingAgent:
                     result_string = self._execute_tool(func_name, args)
                     
                     # Añadimos resultado al hilo para que la IA lo sepa en la próxima iteración
-                    self.messages.append({
+                    # self.messages.append({
+                    #    "role": "tool",
+                    #    "tool_call_id": tool_call.id,
+                    #    "name": func_name,
+                    #    "content": result_string
+                    # })
+
+                    tool_msg = {
                         "role": "tool",
                         "tool_call_id": tool_call.id,
                         "name": func_name,
                         "content": result_string
-                    })
+                    }
+                    self.memory.add_message(tool_msg)  # ¡Añádelo a MemoryManager!
                     
                     # Interceptar finalización
                     if func_name == "finish_task":
