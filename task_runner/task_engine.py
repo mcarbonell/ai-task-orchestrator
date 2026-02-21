@@ -348,7 +348,7 @@ class TaskEngine:
             task_prompt = context_str + task_prompt
         
         # Ejecutar Agent Loop
-        result = self.opencode.run_task(system_prompt=system_prompt, task_prompt=task_prompt)
+        result = self.opencode.run_task(task_id=task.id, system_prompt=system_prompt, task_prompt=task_prompt, logs_dir=str(self.log_dir))
         
         # Evaluar resultado
         success = result.get("status") == "completed"

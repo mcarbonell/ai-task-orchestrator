@@ -163,13 +163,82 @@ class ToolCallingAgent:
                         "required": ["status", "summary"]
                     }
                 }
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "prune_messages",
+                    "description": "SMMA: Elimina mensajes redundantes o logs de errores del contexto activo para liberar tokens. Se recomienda usar si te acercas al límite de contexto.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "message_ids": {
+                                "type": "array",
+                                "items": {"type": "integer"},
+                                "description": "Lista de IDs numéricos de los mensajes a borrar."
+                            }
+                        },
+                        "required": ["message_ids"]
+                    }
+                }
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "summarize_range",
+                    "description": "SMMA: Reemplaza un bloque de mensajes (entre start_id y end_id) por un mensaje resumen que conserva lo importante.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "start_id": {
+                                "type": "integer",
+                                "description": "ID del primer mensaje a resumir."
+                            },
+                            "end_id": {
+                                "type": "integer",
+                                "description": "ID del último mensaje a resumir inclusive."
+                            },
+                            "summary_text": {
+                                "type": "string",
+                                "description": "Texto del resumen que encapsula la información útil resuelta en esos pasos."
+                            }
+                        },
+                        "required": ["start_id", "end_id", "summary_text"]
+                    }
+                }
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "recall_original",
+                    "description": "SMMA: Recupera el contenido original completo de un mensaje desde el Registro Inmutable (The Tape). Útil cuando has resumido o borrado algo pero necesitas verificar detalles exactos que ya no están en el contexto activo.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "message_id": {
+                                "type": "integer",
+                                "description": "ID numérico del mensaje a recuperar desde The Tape."
+                            }
+                        },
+                        "required": ["message_id"]
+                    }
+                }
             }
         ]
+
 
     def _execute_tool(self, name: str, args: Dict[str, Any]) -> str:
         """Ejecuta una herramienta y devuelve la salida como string."""
         logger.info(f"🛠️ Tool Call: {name}({args})")
         
+        # Interceptor SMMA (Fase 4)
+        if hasattr(self, 'memory') and name not in ["prune_messages", "summarize_range", "finish_task"]:
+            metrics = self.memory.get_metrics()
+            # Interceptamos si la presión de memoria supera un límite peligroso (ej. 85%)
+            if metrics["pressure_percent"] > 85.0:
+                logger.warning(f"🚨 INTERCEPTOR SMMA ACTIVO: Bloqueando {name} por falta de memoria ({metrics['pressure_percent']}%)")
+                return f"ERROR CRÍTICO: Contexto al límite ({metrics['pressure_percent']}%). Tienes estrictamente prohibido ejecutar la herramienta '{name}'. Tu siguiente acción OBLIGATORIA debe ser invocar 'summarize_range' o 'prune_messages' para limpiar el historial y liberar tokens."
+
         try:
             if name == "execute_terminal_command":
                 cmd = args.get("command")
@@ -229,23 +298,51 @@ class ToolCallingAgent:
                 status = args.get("status")
                 summary = args.get("summary")
                 return f"TASK_FINISHED_{status.upper()}: {summary}"
+                
+            elif name == "prune_messages":
+                message_ids = args.get("message_ids", [])
+                if not isinstance(message_ids, list):
+                    return "ERROR: message_ids debe ser una lista de enteros."
+                removed = self.memory.prune_messages(message_ids)
+                return f"ÉXITO: Se borraron {removed} mensajes del contexto activo."
+                
+            elif name == "summarize_range":
+                start_id = args.get("start_id")
+                end_id = args.get("end_id")
+                summary_text = args.get("summary_text")
+                res = self.memory.summarize_range(start_id, end_id, summary_text)
+                if res.get("success"):
+                    return f"ÉXITO: Se resumieron {res['removed_count']} mensajes. Resumen insertado como ID visible {res['new_summary_id']}."
+                else:
+                    return f"ERROR resumiendo: {res.get('error')}"
+                
+            elif name == "recall_original":
+                message_id = args.get("message_id")
+                res = self.memory.recall_original(message_id)
+                if res.get("success"):
+                    msg = res.get("message", {})
+                    return f"ÉXITO: Mensaje original recuperado de The Tape [ID {res['visible_id']}, timestamp {res['timestamp']}]:\\nRole: {msg.get('role')}\\nContent: {msg.get('content')}"
+                else:
+                    return f"ERROR recuperando: {res.get('error')}"
 
             else:
                 return f"ERROR: Herramienta desconocida '{name}'"
+
                 
         except Exception as e:
             return f"ERROR al ejecutar '{name}': {str(e)}"
 
-    def run_task(self, system_prompt: str, task_prompt: str) -> Dict[str, Any]:
+    def run_task(self, task_id: str, system_prompt: str, task_prompt: str, logs_dir: str = ".ai-tasks/logs") -> Dict[str, Any]:
         """Inicia el loop de agencia basándonos en la directiva inicial."""
         if not self.client:
             return {"status": "failed", "summary": "No se pudo inicializar OpenAI client (Revisa pip o OPENROUTER_API_KEY)."}
             
+        from .memory_manager import MemoryManager
+        self.memory = MemoryManager(task_id=task_id, logs_dir=logs_dir, max_tokens=200000, target_pressure=0.25)
+
         # Limpiamos/reiniciamos el historial
-        self.messages = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": task_prompt}
-        ]
+        self.memory.add_message({"role": "system", "content": system_prompt})
+        self.memory.add_message({"role": "user", "content": task_prompt})
 
         iteration = 0
         final_status = "failed"
@@ -257,9 +354,22 @@ class ToolCallingAgent:
             
             # Llamamos al modelo
             try:
+                # Fase 2 Dashboard
+                metrics = self.memory.get_metrics()
+                dashboard_msg = None
+                if metrics["message_count"] > 4:
+                    dash_content = f"[SISTEMA SMMA] Presión de memoria: {metrics['pressure_percent']}%. Mensajes activos: {metrics['message_count']}."
+                    if metrics["is_critical"]:
+                        dash_content += " ALERTA: Acercándose al límite de contexto. Considera usar herramientas de limpieza explícitamente si existen, o resume."
+                    dashboard_msg = {"role": "system", "content": dash_content}
+                
+                messages_to_send = self.memory.get_active_messages_for_llm()
+                if dashboard_msg:
+                    messages_to_send.append(dashboard_msg)
+
                 response = self.client.chat.completions.create(
                     model=self.model,
-                    messages=self.messages,
+                    messages=messages_to_send,
                     tools=self.tools,
                     tool_choice="auto"
                 )
@@ -269,7 +379,7 @@ class ToolCallingAgent:
 
             message = response.choices[0].message
             # Guardamos respuesta en el historial
-            self.messages.append(message) 
+            self.memory.add_message(message) 
 
             # ¿El modelo pidió ejecutar herramientas?
             if message.tool_calls:

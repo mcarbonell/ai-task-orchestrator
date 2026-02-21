@@ -193,20 +193,20 @@ Soy honesto con las limitaciones:
 ```
 ┌─────────────────────────────────────────────┐
 │  1. PLANIFICACIÓN (tú + yo, interactivo)    │
-│     - spec.md                                │
-│     - Arquitectura                           │
-│     - Tests de aceptación                    │
+│     - spec.md                               │
+│     - Arquitectura                          │
+│     - Tests de aceptación                   │
 ├─────────────────────────────────────────────┤
-│  2. IMPLEMENTACIÓN (yo, autónomo)            │
-│     - Módulo por módulo                      │
-│     - Ejecutando tests                       │
+│  2. IMPLEMENTACIÓN (yo, autónomo)           │
+│     - Módulo por módulo                     │
+│     - Ejecutando tests                      │
 │     - Actualizando CONTEXT.md               │
 │     ⟶ Checkpoint: tú revisas               │
 ├─────────────────────────────────────────────┤
 │  3. INTEGRACIÓN (tú + yo)                   │
-│     - Prueba manual tuya                     │
-│     - Ajustes finales                        │
-│     - Documentación                          │
+│     - Prueba manual tuya                    │
+│     - Ajustes finales                       │
+│     - Documentación                         │
 └─────────────────────────────────────────────┘
 ```
 
